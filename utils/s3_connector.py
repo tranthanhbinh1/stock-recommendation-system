@@ -1,6 +1,6 @@
-import json
 import logging
 from io import BytesIO
+import pandas
 
 import boto3
 import pandas as pd
@@ -13,11 +13,13 @@ s3 = boto3.resource(
     aws_secret_access_key=S3_SECRET_KEY,
 )
 
-def df_to_s3_parquet(df, bucket_name, file_name):
+def df_to_s3_parquet(df: pandas.DataFrame, bucket_name: str, file_name: str):
     parquet_buffer = BytesIO()
-    df.to_parquet(parquet_buffer, engine="pyarrow")
-    s3.Object(bucket_name, file_name).put(Body=parquet_buffer.getvalue())
-
+    try:
+        df.to_parquet(parquet_buffer, engine="pyarrow")
+        s3.Object(bucket_name, file_name).put(Body=parquet_buffer.getvalue())
+    except Exception as e:
+        print("Error: ", e)
 
 def s3_parquet_to_df(bucket_name: str, file_name: str):
     try:

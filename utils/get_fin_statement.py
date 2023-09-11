@@ -4,8 +4,10 @@ import io
 import pandas as pd
 from utils.s3_connector import df_to_s3_parquet
 
-class get_financial_statement:
-    def __init__(self, organ_code: str, statement_type: typing.Literal("BalanceSheet", "IncomeStatement", "CashFlow")):
+StatementType = typing.Literal["BalanceSheet", "IncomeStatement", "CashFlow"]
+
+class GetFinancialStatement:    
+    def __init__(self, organ_code: str, statement_type: StatementType):
         self.organ_code = organ_code
         self.statement_type = statement_type
         self.page = 0
@@ -34,18 +36,27 @@ class get_financial_statement:
         with io.BytesIO(response.content) as buffer:
             df = pd.read_excel(buffer, engine="openpyxl")
 
-        # Drop NaN values
-        df = df.dropna()
-        # Reset and drop Indexes
-        df = df.reset_index(drop=True)
-        # Tranpose and reset the index again
-        df = df.transpose().reset_index(drop=True)
-        # Set the first row as headers
-        new_headers = df.iloc[0]
-        df = df[1:]
-        df.columns = new_headers
-        
-        self.df = df
+            # Drop NaN values
+            df = df.dropna()
+            # Reset and drop Indexes
+            df = df.reset_index(drop=True)
+            # Tranpose and reset the index again
+            df = df.transpose().reset_index(drop=True)
+            # Set the first row as headers
+            new_headers = df.iloc[0]
+            df = df[1:]
+            df.columns = new_headers
+            df = df.rename(columns={"ITEMS": "Quarter"})
+            
+            df = df.transpose().reset_index(drop=True)
+            df = df.astype(str)
+            
+            self.df = df # Typecast all to string to -> parquet
+
                 
         # Transform DF to Parquet and upload to S3
-        df_to_s3_parquet(self.df, "fiinpro-api", f"FinancialStatement/{self.statement_type}_{self.organ_code}") #TODO: add from_year and to_year
+        df_to_s3_parquet(df=self.df, bucket_name="fiinpro-api", file_name=f"FinancialStatement/{self.statement_type}_{self.organ_code}") #TODO: add from_year and to_year
+        
+        
+# if __name__ == "__main__":
+    # run_fin_statement = GetFinancialStatement("SSI", "BalanceSheet") #Test
