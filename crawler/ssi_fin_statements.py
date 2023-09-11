@@ -1,3 +1,3 @@
-import requests as req
-from config.default import get_financial_statement_download_url
+import requests
+from utils.get_fin_statement import get_financial_statement_download_url
 
