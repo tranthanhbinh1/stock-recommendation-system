@@ -16,8 +16,9 @@ s3 = boto3.resource(
 def df_to_s3_parquet(df: pandas.DataFrame, bucket_name: str, file_name: str):
     parquet_buffer = BytesIO()
     try:
-        df.to_parquet(parquet_buffer, engine="pyarrow")
+        df.to_parquet(parquet_buffer)
         s3.Object(bucket_name, file_name).put(Body=parquet_buffer.getvalue())
+        print("Upload successfully!")
     except Exception as e:
         print("Error: ", e)
 

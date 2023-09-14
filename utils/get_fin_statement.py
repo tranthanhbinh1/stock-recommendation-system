@@ -36,9 +36,8 @@ class GetFinancialStatement:
         with io.BytesIO(response.content) as buffer:
             df = pd.read_excel(buffer, engine="openpyxl")
 
-            # Drop NaN values
-            df = df.dropna()
             # Reset and drop Indexes
+            df = df.iloc[6:]
             df = df.reset_index(drop=True)
             # Tranpose and reset the index again
             df = df.transpose().reset_index(drop=True)
@@ -48,15 +47,14 @@ class GetFinancialStatement:
             df.columns = new_headers
             df = df.rename(columns={"ITEMS": "Quarter"})
             
-            df = df.transpose().reset_index(drop=True)
-            df = df.astype(str)
-            
+            # df = df.astype(str)
+            df.columns = df.columns.astype(str)
+
             self.df = df # Typecast all to string to -> parquet
 
                 
         # Transform DF to Parquet and upload to S3
-        self.df.to_parquet(f"{self.organ_code}_{self.statement_type}.parquet")
-        # df_to_s3_parquet(df=self.df, bucket_name="fiinpro-api", file_name=f"FinancialStatement/{self.statement_type}_{self.organ_code}") #TODO: add from_year and to_year
+        df_to_s3_parquet(df=self.df, bucket_name="fiinpro-api", file_name=f"FinancialStatement/{self.statement_type}_{self.organ_code}") #TODO: add from_year and to_year
         
         
 # if __name__ == "__main__":
