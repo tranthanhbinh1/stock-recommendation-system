@@ -1,3 +1,5 @@
 import requests
-from utils.get_fin_statement import get_financial_statement_download_url
+from utils.get_fin_statement import GetFinancialStatement
+
+# Write logic here
 

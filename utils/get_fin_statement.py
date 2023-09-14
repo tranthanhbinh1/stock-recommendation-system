@@ -55,7 +55,8 @@ class GetFinancialStatement:
 
                 
         # Transform DF to Parquet and upload to S3
-        df_to_s3_parquet(df=self.df, bucket_name="fiinpro-api", file_name=f"FinancialStatement/{self.statement_type}_{self.organ_code}") #TODO: add from_year and to_year
+        self.df.to_parquet(f"{self.organ_code}_{self.statement_type}.parquet")
+        # df_to_s3_parquet(df=self.df, bucket_name="fiinpro-api", file_name=f"FinancialStatement/{self.statement_type}_{self.organ_code}") #TODO: add from_year and to_year
         
         
 # if __name__ == "__main__":
