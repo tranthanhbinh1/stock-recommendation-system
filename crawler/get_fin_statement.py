@@ -12,7 +12,7 @@ class GetFinancialStatement:
     def __init__(self, organ_code: str, statement_type: StatementType, page: PageType):
         self.organ_code = organ_code
         self.statement_type = statement_type
-        self.page = 0
+        self.page = page
         self.get_data()
 
     def get_data(self):
@@ -37,7 +37,7 @@ class GetFinancialStatement:
 
         if response.status_code == 200:
             with open(
-                f"financial_statements/{self.statement_type}_{self.organ_code}_{self.page}.xlsx", "wb"
+                f"financial_statements/{self.page}/{self.statement_type}_{self.organ_code}_{self.page}.xlsx", "wb"
             ) as f:
                 f.write(response.content)
 
