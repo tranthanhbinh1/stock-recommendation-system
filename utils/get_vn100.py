@@ -1,5 +1,4 @@
 import requests
-import json
 
 def get_vn100_symbols() -> list:
     url = "https://www.hsx.vn/Modules/Listed/Web/StockIndex/188803177?_search=false&nd=1694679412209&rows=2147483647&page=1&sidx=id&sord=desc"
