@@ -1,0 +1,1130 @@
+[
+  [
+    "Cost",
+    236
+  ],
+  [
+    "Accumulated depreciation",
+    236
+  ],
+  [
+    "Preferred shares",
+    129
+  ],
+  [
+    "Other current assets",
+    118
+  ],
+  [
+    "Other long-term assets",
+    118
+  ],
+  [
+    "Budget sources and other funds",
+    118
+  ],
+  [
+    "Short-term investments",
+    114
+  ],
+  [
+    "Government bonds purchased for resale",
+    113
+  ],
+  [
+    "Inventories",
+    109
+  ],
+  [
+    "Quarter",
+    74
+  ],
+  [
+    "TOTAL ASSETS",
+    74
+  ],
+  [
+    "Fixed assets",
+    74
+  ],
+  [
+    "Tangible fixed assets",
+    74
+  ],
+  [
+    "Provision for long-term investments",
+    74
+  ],
+  [
+    "Intangible fixed assets",
+    73
+  ],
+  [
+    "Treasury shares",
+    73
+  ],
+  [
+    "Held-to-maturity securities",
+    69
+  ],
+  [
+    "Finance leased assets",
+    69
+  ],
+  [
+    "Other Long-term investments",
+    69
+  ],
+  [
+    "Share premium",
+    69
+  ],
+  [
+    "Difference upon assets revaluation",
+    69
+  ],
+  [
+    "Long-term trade receivables",
+    63
+  ],
+  [
+    "Other long-term receivables",
+    60
+  ],
+  [
+    "Held-to-maturity investment",
+    60
+  ],
+  [
+    "CURRENT ASSETS",
+    59
+  ],
+  [
+    "Cash and cash equivalents",
+    59
+  ],
+  [
+    "Cash equivalents",
+    59
+  ],
+  [
+    "Provision for diminution",
+    59
+  ],
+  [
+    "Prepayments to suppliers",
+    59
+  ],
+  [
+    "Short-term loans receivables",
+    59
+  ],
+  [
+    "Other receivables",
+    59
+  ],
+  [
+    "Provision for decline in inventories",
+    59
+  ],
+  [
+    "VAT to be claimed",
+    59
+  ],
+  [
+    "LONG-TERM ASSETS",
+    59
+  ],
+  [
+    "Long-term prepayments to suppliers",
+    59
+  ],
+  [
+    "Paid-in capital in wholly-owned subsidiaries",
+    59
+  ],
+  [
+    "Long-term intercompany receivables",
+    59
+  ],
+  [
+    "Long-term loans receivables",
+    59
+  ],
+  [
+    "Investment properties",
+    59
+  ],
+  [
+    "Long-term incomplete assets",
+    59
+  ],
+  [
+    "Long-term cost of work in progress",
+    59
+  ],
+  [
+    "Long-term investments",
+    59
+  ],
+  [
+    "LIABILITIES",
+    59
+  ],
+  [
+    "Current liabilities",
+    59
+  ],
+  [
+    "Trade accounts payable",
+    59
+  ],
+  [
+    "Advances from customers",
+    59
+  ],
+  [
+    "Taxes and other payable to State Budget",
+    59
+  ],
+  [
+    "Payable to employees",
+    59
+  ],
+  [
+    "Accrued expenses",
+    59
+  ],
+  [
+    "Intercompany payables",
+    59
+  ],
+  [
+    "Short-term unrealized revenue",
+    59
+  ],
+  [
+    "Other payables",
+    59
+  ],
+  [
+    "Bonus and welfare funds",
+    59
+  ],
+  [
+    "Long-term trade payables",
+    59
+  ],
+  [
+    "Long-term advances from customers",
+    59
+  ],
+  [
+    "Long-term accrued expenses",
+    59
+  ],
+  [
+    "Long-term intercompany payables",
+    59
+  ],
+  [
+    "Other long-term payables",
+    59
+  ],
+  [
+    "Convertible bonds",
+    59
+  ],
+  [
+    "Provision for severance allowances",
+    59
+  ],
+  [
+    "Technology-science development fund",
+    59
+  ],
+  [
+    "OWNER'S EQUITY",
+    59
+  ],
+  [
+    "Capital and reserves",
+    59
+  ],
+  [
+    "Foreign exchange differences",
+    59
+  ],
+  [
+    "Other funds",
+    59
+  ],
+  [
+    "Undistributed earnings",
+    59
+  ],
+  [
+    "Funds used for fixed asset acquisitions",
+    59
+  ],
+  [
+    "TOTAL RESOURCES",
+    59
+  ],
+  [
+    "Trade accounts receivable",
+    58
+  ],
+  [
+    "Construction in progress",
+    58
+  ],
+  [
+    "Long-term prepayments",
+    58
+  ],
+  [
+    "Deferred income tax assets",
+    58
+  ],
+  [
+    "Long-term equipment, material and spare parts",
+    58
+  ],
+  [
+    "Price stabilization fund",
+    58
+  ],
+  [
+    "Long-term liabilities",
+    58
+  ],
+  [
+    "Intra-company payables for operating capital received",
+    58
+  ],
+  [
+    "Provision for long-term liabilities",
+    58
+  ],
+  [
+    "Conversion options on convertible bonds",
+    58
+  ],
+  [
+    "Intercompany receivables",
+    55
+  ],
+  [
+    "Construction contract in progress receivables",
+    55
+  ],
+  [
+    "Shortage of current assets waiting for solution",
+    55
+  ],
+  [
+    "Other taxes receivable",
+    55
+  ],
+  [
+    "Construction contract in progress payables",
+    55
+  ],
+  [
+    "Common shares",
+    55
+  ],
+  [
+    "Investment and development funds",
+    55
+  ],
+  [
+    "Current period undistributed earnings",
+    55
+  ],
+  [
+    "Cash",
+    54
+  ],
+  [
+    "Accounts receivable",
+    54
+  ],
+  [
+    "Provision for doubtful debts",
+    54
+  ],
+  [
+    "Short-term prepaid expenses",
+    54
+  ],
+  [
+    "Long-term trade receivables from customers",
+    54
+  ],
+  [
+    "Provision for doubtful LT receivable",
+    54
+  ],
+  [
+    "Investment in subsidiaries",
+    54
+  ],
+  [
+    "Investment in associates",
+    54
+  ],
+  [
+    "Good will",
+    54
+  ],
+  [
+    "Short-term borrowings",
+    54
+  ],
+  [
+    "Provision for ST liabilities",
+    54
+  ],
+  [
+    "Unrealized revenue",
+    54
+  ],
+  [
+    "Long-term borrowings",
+    54
+  ],
+  [
+    "Deferred income tax liabilities",
+    54
+  ],
+  [
+    "Paid-in capital",
+    54
+  ],
+  [
+    "Owner's other capitals",
+    54
+  ],
+  [
+    "Enterprise arrangement fund",
+    54
+  ],
+  [
+    "Financial researve funds",
+    54
+  ],
+  [
+    "Beginning accumulated undistributed earnings",
+    54
+  ],
+  [
+    "Minority interests",
+    54
+  ],
+  [
+    "Bonus and welfare funds (Before 2010)",
+    54
+  ],
+  [
+    "Minority Interest",
+    54
+  ],
+  [
+    "Minority interest",
+    19
+  ],
+  [
+    "Loans and advances to customers",
+    16
+  ],
+  [
+    "Cash and precious metals",
+    15
+  ],
+  [
+    "Balances with the SBV",
+    15
+  ],
+  [
+    "Placements & loan to credit institutions",
+    15
+  ],
+  [
+    "Trading securities, net",
+    15
+  ],
+  [
+    "Trading securities",
+    15
+  ],
+  [
+    "Less: Provision for diminution in value of trading securities",
+    15
+  ],
+  [
+    "Derivatives and other financial assets",
+    15
+  ],
+  [
+    "Loans and advances to customers, net",
+    15
+  ],
+  [
+    "Less: Provision for losses on loans and advances to customers",
+    15
+  ],
+  [
+    "Investment Securities",
+    15
+  ],
+  [
+    "Available-for-sales securities",
+    15
+  ],
+  [
+    "Less: Provision for diminution in value of investment securities",
+    15
+  ],
+  [
+    "Investment in other entities and long term investments",
+    15
+  ],
+  [
+    "Investment in Joint Ventures",
+    15
+  ],
+  [
+    "Investment in associate companies",
+    15
+  ],
+  [
+    "B\u1ea5t \u0111\u1ed9ng s\u1ea3n \u0111\u1ea7u t\u01b0",
+    15
+  ],
+  [
+    "T\u00e0i s\u1ea3n C\u00f3 kh\u00e1c",
+    15
+  ],
+  [
+    "LIABILITIES AND SHAREHOLDER'S EQUITY",
+    15
+  ],
+  [
+    "Total liabilities",
+    15
+  ],
+  [
+    "Due to Gov and borrowings from SBV",
+    15
+  ],
+  [
+    "Deposits and borrowings from other credit institutions",
+    15
+  ],
+  [
+    "Deposits from customers",
+    15
+  ],
+  [
+    "Derivatives and other financial liabilities",
+    15
+  ],
+  [
+    "Funds received from Gov, international and other institutions",
+    15
+  ],
+  [
+    "Convertible bonds/CDs and other valuable papers issued",
+    15
+  ],
+  [
+    "Other liabilities",
+    15
+  ],
+  [
+    "Shareholders' Equity",
+    15
+  ],
+  [
+    "Capital",
+    15
+  ],
+  [
+    "Charter capital",
+    15
+  ],
+  [
+    "Fund for basic construction",
+    15
+  ],
+  [
+    "Other capitals",
+    15
+  ],
+  [
+    "Reserves",
+    15
+  ],
+  [
+    "Foreign currency difference reserve",
+    15
+  ],
+  [
+    "Retained Earnings",
+    15
+  ],
+  [
+    "Short-term loans",
+    9
+  ],
+  [
+    "Short-term financial assets",
+    8
+  ],
+  [
+    "Construction contract in progress",
+    8
+  ],
+  [
+    " Long-term loans",
+    8
+  ],
+  [
+    "Cash  ",
+    5
+  ],
+  [
+    "Accounts receivables",
+    5
+  ],
+  [
+    "Receivable from trading stocks",
+    5
+  ],
+  [
+    "Short-term prepayments",
+    5
+  ],
+  [
+    "Government bonds purchased for resales",
+    5
+  ],
+  [
+    "Finance lease assets",
+    5
+  ],
+  [
+    "Provision for short-term liabilities",
+    5
+  ],
+  [
+    "Deferred revenue",
+    5
+  ],
+  [
+    "Capital surplus",
+    5
+  ],
+  [
+    "Owner's other capital",
+    5
+  ],
+  [
+    "Financial reserve funds",
+    5
+  ],
+  [
+    "Bonus and welfare funds (before 2010)",
+    5
+  ],
+  [
+    "MINORITY INTEREST (before 2015)",
+    5
+  ],
+  [
+    "Short-term investmets",
+    4
+  ],
+  [
+    "Loans",
+    4
+  ],
+  [
+    "Available for sales assets",
+    4
+  ],
+  [
+    "Receivables (from 2016)",
+    4
+  ],
+  [
+    "Deductible value added tax",
+    4
+  ],
+  [
+    "Receivables from services provided by the securities",
+    4
+  ],
+  [
+    "Intercompany receivables ",
+    4
+  ],
+  [
+    "Receivables arise from transaction errors",
+    4
+  ],
+  [
+    "Provision for short-term receivables",
+    4
+  ],
+  [
+    " Provision for doubtful debts",
+    4
+  ],
+  [
+    " Shortage of current assets watiting for solution",
+    4
+  ],
+  [
+    "Inventories (Net)",
+    4
+  ],
+  [
+    "Inventories  ",
+    4
+  ],
+  [
+    "Advance payment",
+    4
+  ],
+  [
+    "Tools and equipments",
+    4
+  ],
+  [
+    "Short-term Collaterals",
+    4
+  ],
+  [
+    "Other taxes receivables",
+    4
+  ],
+  [
+    "Provision for other current assets",
+    4
+  ],
+  [
+    "Long-term financial assets",
+    4
+  ],
+  [
+    "Provision for doubtful long-term receivables",
+    4
+  ],
+  [
+    "Investments in subsidiaries",
+    4
+  ],
+  [
+    "Investments in associates ",
+    4
+  ],
+  [
+    "Long-term securities investment",
+    4
+  ],
+  [
+    "Other long-term investment",
+    4
+  ],
+  [
+    " Revaluation of tangible fixed assets using fair value model",
+    4
+  ],
+  [
+    " Revaluation of  fixed assets in financial lease using fair value model",
+    4
+  ],
+  [
+    " Revaluation of intangible fixed assets using fair value model",
+    4
+  ],
+  [
+    "Construction in progress (before 2015) ",
+    4
+  ],
+  [
+    "Revaluation of investment property using fair value model",
+    4
+  ],
+  [
+    "Long-term collaterals",
+    4
+  ],
+  [
+    "Payments to Settlement Assistance Fund",
+    4
+  ],
+  [
+    "Goodwill",
+    4
+  ],
+  [
+    "Provision for long term assets",
+    4
+  ],
+  [
+    "Short-term finance lease",
+    4
+  ],
+  [
+    "Short-term convertible bonds",
+    4
+  ],
+  [
+    "Short-term bonds issued",
+    4
+  ],
+  [
+    "Loans from payable assistance fund",
+    4
+  ],
+  [
+    "Payables to securities trading",
+    4
+  ],
+  [
+    "Payable arise from transaction errors",
+    4
+  ],
+  [
+    "Employees' welfare payable to authorities",
+    4
+  ],
+  [
+    "Short-term collaterals receivables",
+    4
+  ],
+  [
+    "Dividend, principal and interests payables",
+    4
+  ],
+  [
+    "Payables to securities issues",
+    4
+  ],
+  [
+    " Long-term finance lease",
+    4
+  ],
+  [
+    "Long-term financial assets loans",
+    4
+  ],
+  [
+    "Long-term bonds",
+    4
+  ],
+  [
+    "Long-term collaterals received",
+    4
+  ],
+  [
+    "Provision for compensation of investors",
+    4
+  ],
+  [
+    " Deferred income tax liabilities",
+    4
+  ],
+  [
+    "Sharholders' equity",
+    4
+  ],
+  [
+    "Paid-in capital  ",
+    4
+  ],
+  [
+    "Differences upon asset revaluation",
+    4
+  ],
+  [
+    "Charter reserve",
+    4
+  ],
+  [
+    "Investment and development",
+    4
+  ],
+  [
+    "Realized gain",
+    4
+  ],
+  [
+    "Unrealized gain",
+    4
+  ],
+  [
+    "DISTRIBUTED PROFIT TO INVESTOR",
+    4
+  ],
+  [
+    "Distributed profit to investor during the year ",
+    4
+  ],
+  [
+    "Trade accounts receivables",
+    1
+  ],
+  [
+    "Receivable from insurance contract",
+    1
+  ],
+  [
+    "Other receivables from customers",
+    1
+  ],
+  [
+    "Advanced payment",
+    1
+  ],
+  [
+    "Provision for doubful debts",
+    1
+  ],
+  [
+    "Invetories (Net)",
+    1
+  ],
+  [
+    "Undistributed commision expenses",
+    1
+  ],
+  [
+    "Other short-term prepayments",
+    1
+  ],
+  [
+    "Margin deposits",
+    1
+  ],
+  [
+    "Reinsurance assets",
+    1
+  ],
+  [
+    "Provision for Premium outward reinsurance",
+    1
+  ],
+  [
+    "Provision for claim form outward reinsurance",
+    1
+  ],
+  [
+    "LOANS AND ADVANCES TO CUSTOMERS",
+    1
+  ],
+  [
+    "Provision for credit loss",
+    1
+  ],
+  [
+    "Long term trade receivables",
+    1
+  ],
+  [
+    "Insurance deposits",
+    1
+  ],
+  [
+    "Provision for doubful long-term receivables",
+    1
+  ],
+  [
+    "Intagible fixed assets",
+    1
+  ],
+  [
+    "Construction in progress (before 2015)",
+    1
+  ],
+  [
+    "Construction in progress  ",
+    1
+  ],
+  [
+    "Investment in suBsidiaries",
+    1
+  ],
+  [
+    "Investement in associates",
+    1
+  ],
+  [
+    "Other long-term investements",
+    1
+  ],
+  [
+    "Good will (before 2015)",
+    1
+  ],
+  [
+    "Long-term prepayments  ",
+    1
+  ],
+  [
+    "Deferred income tax assests",
+    1
+  ],
+  [
+    "Long-term deposit",
+    1
+  ],
+  [
+    "Long-term equiment, material and spare",
+    1
+  ],
+  [
+    "Good will  ",
+    1
+  ],
+  [
+    "Payables from insurance contract",
+    1
+  ],
+  [
+    "Payables to suppliers",
+    1
+  ],
+  [
+    "Unearned commission income",
+    1
+  ],
+  [
+    "Price stablization fund",
+    1
+  ],
+  [
+    "Insurance reserve",
+    1
+  ],
+  [
+    "Unearned premium reserve",
+    1
+  ],
+  [
+    "Mathematical reserve",
+    1
+  ],
+  [
+    "Claim reserve",
+    1
+  ],
+  [
+    "Catastrophe reserve",
+    1
+  ],
+  [
+    "Dividend reserve",
+    1
+  ],
+  [
+    "Equalization reserve",
+    1
+  ],
+  [
+    "Amount due to customers",
+    1
+  ],
+  [
+    "Deposit from commercial banks",
+    1
+  ],
+  [
+    "Deposit from customers",
+    1
+  ],
+  [
+    "Long-term liabilites",
+    1
+  ],
+  [
+    "Intra-company payables for operating capital",
+    1
+  ],
+  [
+    "Long-term loans",
+    1
+  ],
+  [
+    "Long-term deposit, mortage",
+    1
+  ],
+  [
+    "Deferred income taxes liabilities",
+    1
+  ],
+  [
+    "Provision for long-term liabilites",
+    1
+  ],
+  [
+    "Reserves (before 2014)",
+    1
+  ],
+  [
+    "Unearned premium reserve (before 2014)",
+    1
+  ],
+  [
+    "Technical reserve (before 2014)",
+    1
+  ],
+  [
+    "Claim reserve (before 2014)",
+    1
+  ],
+  [
+    "Catastrophe reserve (before 2014)",
+    1
+  ],
+  [
+    "Dividend reseve (before 2014)",
+    1
+  ],
+  [
+    "Equalization reserve (before 2014)",
+    1
+  ],
+  [
+    "Paid-in capital ",
+    1
+  ],
+  [
+    "Treasury Shares",
+    1
+  ],
+  [
+    "Differences upon assets revaluation",
+    1
+  ],
+  [
+    "Statutory reserve",
+    1
+  ],
+  [
+    "Beginning accumulated undistritbuted earning ",
+    1
+  ],
+  [
+    "Enterprise arragement fund",
+    1
+  ],
+  [
+    "Minority interest   ",
+    1
+  ]
+]

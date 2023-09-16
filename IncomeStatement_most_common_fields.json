@@ -1,0 +1,730 @@
+[
+  [
+    "Financial income",
+    109
+  ],
+  [
+    "Other expenses",
+    78
+  ],
+  [
+    "Quarter",
+    74
+  ],
+  [
+    "Attributable to parent company",
+    74
+  ],
+  [
+    "Minority interest",
+    70
+  ],
+  [
+    "Other incomes",
+    69
+  ],
+  [
+    "Corporate income tax - current",
+    69
+  ],
+  [
+    "Corporate income tax - deferred",
+    69
+  ],
+  [
+    "EPS",
+    69
+  ],
+  [
+    "General and admin expenses",
+    59
+  ],
+  [
+    "Sales",
+    58
+  ],
+  [
+    "Sales deductions",
+    58
+  ],
+  [
+    "Net sales",
+    58
+  ],
+  [
+    "Cost of sales",
+    58
+  ],
+  [
+    "Gross Profit",
+    58
+  ],
+  [
+    "EPS diluted",
+    58
+  ],
+  [
+    "Selling expenses",
+    56
+  ],
+  [
+    "Gain/(loss) from joint ventures",
+    55
+  ],
+  [
+    "Income from investments in other entities",
+    55
+  ],
+  [
+    "Net accounting profit/(loss) before tax",
+    55
+  ],
+  [
+    "Net profit/(loss) after tax",
+    55
+  ],
+  [
+    "of which: interest expenses",
+    54
+  ],
+  [
+    "Operating profit/(loss)",
+    54
+  ],
+  [
+    "Net other income/(expenses)",
+    54
+  ],
+  [
+    "Corporate income tax expenses",
+    54
+  ],
+  [
+    "Interest and Similar Income",
+    15
+  ],
+  [
+    "Interest and Similar Expenses",
+    15
+  ],
+  [
+    "Net Interest Income",
+    15
+  ],
+  [
+    "Fees and Commission income",
+    15
+  ],
+  [
+    "Fees and Commission expenses",
+    15
+  ],
+  [
+    "Net Fee and Commission Income",
+    15
+  ],
+  [
+    "Net gain/(loss) from foreign currency and gold dealings",
+    15
+  ],
+  [
+    "Net gain/(loss) from trading of trading securities",
+    15
+  ],
+  [
+    "Net gain/(loss) from disposal of investment securities",
+    15
+  ],
+  [
+    "Net Other income/(expenses)",
+    15
+  ],
+  [
+    "Dividends income",
+    15
+  ],
+  [
+    "Total operating income",
+    15
+  ],
+  [
+    "General and Admin expenses",
+    15
+  ],
+  [
+    "Operating Profit Before Provision for Credit Losses",
+    15
+  ],
+  [
+    "Provision for credit loses",
+    15
+  ],
+  [
+    "Profit before tax",
+    15
+  ],
+  [
+    "Corporate income tax",
+    15
+  ],
+  [
+    "Net Profit After Tax",
+    15
+  ],
+  [
+    "Gain/loss from revaluation of derivatives",
+    8
+  ],
+  [
+    "Other income",
+    6
+  ],
+  [
+    "Financial expenses",
+    5
+  ],
+  [
+    "Net other income/expenses",
+    5
+  ],
+  [
+    "Business income tax expenses",
+    5
+  ],
+  [
+    "Business income tax - current",
+    5
+  ],
+  [
+    "Income from financial assets regconized through profit/loss (FVTPL)",
+    4
+  ],
+  [
+    "Income from selling financial assets",
+    4
+  ],
+  [
+    "FVTPL revaluation gain",
+    4
+  ],
+  [
+    "Dividend, interest from FVTPL financial assets",
+    4
+  ],
+  [
+    "Income from held to maturity investment (HTM)",
+    4
+  ],
+  [
+    "Income from loans and receivables",
+    4
+  ],
+  [
+    "Income from available for sales assets (AFS)",
+    4
+  ],
+  [
+    "Income from derivatives",
+    4
+  ],
+  [
+    "Revenue in brokerage services",
+    4
+  ],
+  [
+    "Revenue in underwriting services",
+    4
+  ],
+  [
+    "Revenue in Issuance agency services",
+    4
+  ],
+  [
+    "Revenue in advisory services",
+    4
+  ],
+  [
+    "Revenue in auction trust services",
+    4
+  ],
+  [
+    "Revenue in securities custody service",
+    4
+  ],
+  [
+    "Revenue in securities investment and other investment activitives",
+    4
+  ],
+  [
+    "Retal income from investment property",
+    4
+  ],
+  [
+    "Revenue income from advisory services",
+    4
+  ],
+  [
+    " Other revenues",
+    4
+  ],
+  [
+    "Loss from financial assets recognized through profit/loss (FVTPL)",
+    4
+  ],
+  [
+    "Loss from selling financial assets FVTPL",
+    4
+  ],
+  [
+    "FVTPL financial assets revaluation loss",
+    4
+  ],
+  [
+    "FVTPL financial assets purchase transaction costs",
+    4
+  ],
+  [
+    "Loss from held to maturity investment",
+    4
+  ],
+  [
+    "Interest cost, loss from loans and receivables",
+    4
+  ],
+  [
+    "Loss from available for sales assets (AFS)",
+    4
+  ],
+  [
+    "Provision for losses from mortgage assets, uncollectible receivables, and borrowing expenses",
+    4
+  ],
+  [
+    "Loss from derivatives",
+    4
+  ],
+  [
+    "Proprietary trading services expenses",
+    4
+  ],
+  [
+    "Brokerage expenses",
+    4
+  ],
+  [
+    "Underwriting, securities Issuance expenses",
+    4
+  ],
+  [
+    "Expenses for securities advisory",
+    4
+  ],
+  [
+    "Bidding agent service expensee",
+    4
+  ],
+  [
+    "Investors' securities depository expenses",
+    4
+  ],
+  [
+    "Expenses for financial advisory activities",
+    4
+  ],
+  [
+    "Revenue from financial activities",
+    4
+  ],
+  [
+    "Realized and unrealized foreign exchange gain",
+    4
+  ],
+  [
+    "Income from non fixed accrued dividend and interest",
+    4
+  ],
+  [
+    "Gain from disposals or sales of investment in subsidiaries, associates and joint ventures",
+    4
+  ],
+  [
+    "Other revenue from investments",
+    4
+  ],
+  [
+    "Realized and unrealized foreign exchange loss",
+    4
+  ],
+  [
+    "Interest expenses",
+    4
+  ],
+  [
+    "Loss from disposals or sales of investments in subsidiaries, associates and joint ventures",
+    4
+  ],
+  [
+    "Provision for losses on long-term financial investement",
+    4
+  ],
+  [
+    "Other investment expenses",
+    4
+  ],
+  [
+    "Gain/loss from join ventures",
+    4
+  ],
+  [
+    "Selling costs",
+    4
+  ],
+  [
+    "Operating profit/loss",
+    4
+  ],
+  [
+    "Income from investment in other entities (before 2015)",
+    4
+  ],
+  [
+    "Net accounting profit/loss before tax",
+    4
+  ],
+  [
+    "Realized gain",
+    4
+  ],
+  [
+    "Unrealized gain",
+    4
+  ],
+  [
+    "Business income tax-deferred",
+    4
+  ],
+  [
+    "Net profit/loss after tax",
+    4
+  ],
+  [
+    "Profit after tax deducted of Funds",
+    4
+  ],
+  [
+    "Minority interests",
+    4
+  ],
+  [
+    "Other comprehensive gain (loss) after tax",
+    4
+  ],
+  [
+    "Gain/loss from revaluation of held maturity investments",
+    4
+  ],
+  [
+    "Gain/loss from revaluation of available for sales financial assets",
+    4
+  ],
+  [
+    "Gain/loss distributed from investments in subsidiaries, associates and joint ventures",
+    4
+  ],
+  [
+    "Gain/loss from foreign exchange difference of oversea operations",
+    4
+  ],
+  [
+    "Pre-distributed gain/loss from investments in subsidiaries, associates and joint ventures",
+    4
+  ],
+  [
+    "Gain/loss from revaluation of fixed assets using fair value model",
+    4
+  ],
+  [
+    "Comprehensive income distributed to shareholders",
+    4
+  ],
+  [
+    "Comprehensive income distributed to uncontrolled shareholders",
+    4
+  ],
+  [
+    "Net income to common share",
+    4
+  ],
+  [
+    "EPS basic",
+    4
+  ],
+  [
+    "Deductions",
+    2
+  ],
+  [
+    "Premium deductions",
+    2
+  ],
+  [
+    "Revenue from insurance premium",
+    1
+  ],
+  [
+    "Gross written premium",
+    1
+  ],
+  [
+    "Reinsurance premium assumned ",
+    1
+  ],
+  [
+    "Increase/(Decrease) in unearned premium reserve for direct insurance and outward reinsurance",
+    1
+  ],
+  [
+    "Reinsurance premium ceded",
+    1
+  ],
+  [
+    "Increase/decrease in reinsurance premium ceded reserve",
+    1
+  ],
+  [
+    "Other deductions",
+    1
+  ],
+  [
+    "Net revenue of insurance premium",
+    1
+  ],
+  [
+    "Increase in unearned premium reserve and techinical reserve",
+    1
+  ],
+  [
+    "Commission income from  outward reinsurance and other income from insurance activities",
+    1
+  ],
+  [
+    "Commission on reinsurance ceded",
+    1
+  ],
+  [
+    "Income on reinsurance assumed",
+    1
+  ],
+  [
+    "Income on reinsurance ceded",
+    1
+  ],
+  [
+    "Income from other acitvites",
+    1
+  ],
+  [
+    "Net sales from insurance business",
+    1
+  ],
+  [
+    "Claim expense",
+    1
+  ],
+  [
+    "Total claim expense",
+    1
+  ],
+  [
+    "Claim and maturity payment expenses",
+    1
+  ],
+  [
+    "Claim expenses for reinsurance assumed",
+    1
+  ],
+  [
+    "Recoveries form reinsurance ceded",
+    1
+  ],
+  [
+    "Subrogation recoveries",
+    1
+  ],
+  [
+    "Salvages",
+    1
+  ],
+  [
+    "Claim recoveries from outward reinsurance",
+    1
+  ],
+  [
+    "Claim expenses on retained risks",
+    1
+  ],
+  [
+    "Increase/(decrease) in mathematic reserves",
+    1
+  ],
+  [
+    "Increase/(decrease) in claim reserve",
+    1
+  ],
+  [
+    "Increase/(decrease) in claim reserve for direct insurance and inward insurance",
+    1
+  ],
+  [
+    "Increase/(decrease) in claim reserve for outward insurance",
+    1
+  ],
+  [
+    "Total insurance claim settlement expenses",
+    1
+  ],
+  [
+    "Claim expenses using catastrophe reserve",
+    1
+  ],
+  [
+    "Provision for catastrophe reserve",
+    1
+  ],
+  [
+    "Other insurance operating expenses",
+    1
+  ],
+  [
+    "Other underwriting expenses",
+    1
+  ],
+  [
+    "Commissions",
+    1
+  ],
+  [
+    "Expense of recourse against the third party",
+    1
+  ],
+  [
+    "Expense of handling fully-indemnified goods",
+    1
+  ],
+  [
+    "Risk minimization expenses",
+    1
+  ],
+  [
+    "Loss adjusting fee, risk assessment",
+    1
+  ],
+  [
+    "Others",
+    1
+  ],
+  [
+    "Other reinsurance assumed expenses",
+    1
+  ],
+  [
+    "Other reinsurance ceded expenses",
+    1
+  ],
+  [
+    "Other direct insurance operating expenses",
+    1
+  ],
+  [
+    "Total direct insurance operating expenses",
+    1
+  ],
+  [
+    "Gross insurance operating profit",
+    1
+  ],
+  [
+    "Net operating income from banking activities",
+    1
+  ],
+  [
+    "Income from banking activities",
+    1
+  ],
+  [
+    "Expenses from banking activities",
+    1
+  ],
+  [
+    "Profit from real estate investment activities",
+    1
+  ],
+  [
+    "Revenue from real estate",
+    1
+  ],
+  [
+    "Cost of real estate",
+    1
+  ],
+  [
+    "Profit from financial activities",
+    1
+  ],
+  [
+    "Net operating income from other activities",
+    1
+  ],
+  [
+    "Revenue from other activities",
+    1
+  ],
+  [
+    "Expenses from other activities",
+    1
+  ],
+  [
+    "General and administrative expenses of insurance operation",
+    1
+  ],
+  [
+    "General and administrative expenses of banking operation",
+    1
+  ],
+  [
+    "General and administrative expenses of others operation",
+    1
+  ],
+  [
+    "Net operating profit from insurance operation",
+    1
+  ],
+  [
+    "Loss from life insurance",
+    1
+  ],
+  [
+    "Net profit from non - life insurance ",
+    1
+  ],
+  [
+    "Net profit from bank operation",
+    1
+  ],
+  [
+    "Net profit from others operation",
+    1
+  ],
+  [
+    "Equalisation reserve",
+    1
+  ],
+  [
+    "Business income tax - deferred",
+    1
+  ],
+  [
+    "EPS_basis",
+    1
+  ]
+]
