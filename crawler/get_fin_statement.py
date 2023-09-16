@@ -6,7 +6,8 @@ from utils.s3_connector import df_to_s3_parquet
 
 StatementType = typing.Literal["BalanceSheet", "IncomeStatement", "CashFlow"]
 
-class GetFinancialStatement:    
+
+class GetFinancialStatement:
     def __init__(self, organ_code: str, statement_type: StatementType):
         self.organ_code = organ_code
         self.statement_type = statement_type
@@ -46,16 +47,17 @@ class GetFinancialStatement:
             df = df[1:]
             df.columns = new_headers
             df = df.rename(columns={"ITEMS": "Quarter"})
-            
+
             # df = df.astype(str)
             df.columns = df.columns.astype(str)
 
-            self.df = df # Typecast all to string to -> parquet
+            self.df = df  # Typecast all to string to -> parquet
 
-                
         # Transform DF to Parquet and upload to S3
-        df_to_s3_parquet(df=self.df, bucket_name="fiinpro-api", file_name=f"FinancialStatement/{self.statement_type}_{self.organ_code}") #TODO: add from_year and to_year
-        
-        
+        # TODO: add from_year and to_year
+        df_to_s3_parquet(df=self.df, bucket_name="fiinpro-api",
+                         file_name=f"FinancialStatement/{self.statement_type}_{self.organ_code}")
+
+
 # if __name__ == "__main__":
     # run_fin_statement = GetFinancialStatement("SSI", "BalanceSheet") #Test
