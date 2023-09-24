@@ -1,0 +1,32 @@
+[
+  {
+    "organCode": "DHC",
+    "icbRank": 1,
+    "icbTotalRanked": 21,
+    "indexRank": null,
+    "indexTotalRanked": null,
+    "icbCode": "1730",
+    "comGroupCode": null,
+    "growth": "C",
+    "value": "F",
+    "momentum": "C",
+    "vgm": "B",
+    "controlStatusCode": -1,
+    "controlStatusName": "Active"
+  },
+  {
+    "organCode": "PTB",
+    "icbRank": 2,
+    "icbTotalRanked": 21,
+    "indexRank": null,
+    "indexTotalRanked": null,
+    "icbCode": "1730",
+    "comGroupCode": null,
+    "growth": "D",
+    "value": "B",
+    "momentum": "B",
+    "vgm": "B",
+    "controlStatusCode": -1,
+    "controlStatusName": "Active"
+  }
+]

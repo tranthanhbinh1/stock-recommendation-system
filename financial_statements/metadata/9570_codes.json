@@ -1,0 +1,17 @@
+[
+  {
+    "organCode": "SAM",
+    "icbRank": 7,
+    "icbTotalRanked": 16,
+    "indexRank": null,
+    "indexTotalRanked": null,
+    "icbCode": "9570",
+    "comGroupCode": null,
+    "growth": "B",
+    "value": "F",
+    "momentum": "B",
+    "vgm": "B",
+    "controlStatusCode": -1,
+    "controlStatusName": "Active"
+  }
+]
