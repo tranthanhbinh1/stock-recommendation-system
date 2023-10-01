@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 .idea/
+.xlsx#
 # C extensions
 *.so
 financial_statements/all_data
@@ -162,3 +163,4 @@ cython_debug/
 # VsCode
 
 .vscode
+.gitignore
