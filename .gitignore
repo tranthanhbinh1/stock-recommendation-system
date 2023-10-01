@@ -5,7 +5,7 @@ __pycache__/
 .idea/
 # C extensions
 *.so
-
+financial_statements/all_data
 # Distribution / packaging
 .Python
 build/
