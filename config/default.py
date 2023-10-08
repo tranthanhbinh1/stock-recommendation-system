@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-# load_dotenv()
+load_dotenv()
 
 # S3_ACCESS_KEY=os.environ["S3_ACCESS_KEY"]
 # S3_ENDPOINT=os.environ["S3_ENDPOINT"]   
@@ -30,3 +30,10 @@ CPI_REFERER = "https://finance.vietstock.vn/du-lieu-vi-mo/52/cpi.htm"
 EX_IN_RATES_REFERER = "https://finance.vietstock.vn/du-lieu-vi-mo/53-64/ty-gia-lai-suat.htm"
 CPI_PAYLOAD = "type=2&formYear={from_year}&toYear={to_year}&from=1&to=9&normTypeID=52&page=0&pages=0&__RequestVerificationToken={token}"
 EX_IN_PAYLOAD = "type=1&fromYear={from_year}&toYear={to_year}from=2022-01-01&to=2022-12-31&normTypeID=53&page=0&pages=0&__RequestVerificationToken={token}"
+# TODO: fix from year to year
+
+# DATABASEC CONNECTIONS
+DB_HOST = os.environ["DB_HOST"]
+DB_USERNAME = os.environ["DB_USERNAME"]
+DB_PASSWORD = os.environ["DB_PASSWORD"]
+DB_DATABASE = os.environ["DB_DATABASE"]
