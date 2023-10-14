@@ -137,8 +137,3 @@ class VietstockCrawler:
         df["TernDay"] = df["TernDay"].apply(convert_timestamp)
         df.drop(columns=["CssStyle", "GroupName"], inplace=True)
         return df
-
-
-instance = VietstockCrawler()
-df = instance.vietstock_get_ex()
-print(df)
