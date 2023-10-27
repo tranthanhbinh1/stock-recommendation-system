@@ -35,5 +35,6 @@ class SSIHistoricalDailyPrice:
             return None
         
         df_ = pd.DataFrame(data)
+        df_["symbol"] = symbol
         
         return df_
