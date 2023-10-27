@@ -13,9 +13,15 @@ class SSIHistoricalDailyPrice:
     symbol_lst = get_vn100_symbols()
 
     @classmethod
-    def get_historical_daily_price(cls, symbol: str, from_date: str, to_date: str, URL: str = DEFAULT_URL):
-        from_timestamp = int(datetime.strptime(from_date, '%Y-%m-%d').timestamp())
-        to_timestamp = int(datetime.strptime(to_date, '%Y-%m-%d').timestamp())
+    def get_historical_daily_price(
+        cls,
+        symbol: str,
+        from_date: str = "2017-01-01",
+        to_date: str = "2023-09-30",
+        URL: str = DEFAULT_URL,
+    ):
+        from_timestamp = int(datetime.strptime(from_date, "%Y-%m-%d").timestamp())
+        to_timestamp = int(datetime.strptime(to_date, "%Y-%m-%d").timestamp())
 
         payload = {
             "symbol": symbol,
@@ -33,8 +39,8 @@ class SSIHistoricalDailyPrice:
         if not data:
             logging.info(f"No data for {symbol}")
             return None
-        
+
         df_ = pd.DataFrame(data)
         df_["symbol"] = symbol
-        
+
         return df_
