@@ -32,8 +32,6 @@ class Transformer0570():
 
 
 
-
-
 # balancesheet_columns_to_process = [
 #     "Quarter",
 #     "Ticker",

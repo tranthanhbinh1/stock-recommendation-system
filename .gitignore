@@ -166,3 +166,4 @@ cython_debug/
 .gitignore
 
 venv
+test.json
