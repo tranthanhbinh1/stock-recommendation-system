@@ -2,6 +2,7 @@ import logging
 from crawler.get_vn100 import get_vn100_symbols
 import requests
 from config.default import SSI_HEADERS
+from config.logging_config import setup_logging
 from utils.timescale_connector import TimescaleConnector
 from datetime import datetime
 from dataclasses import dataclass
@@ -72,11 +73,7 @@ class SSIHistoricalDailyPrice:
 
 if __name__ == "__main__":
     # set up logging to stdout
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
-        datefmt="%m-%d %H:%M",
-    )
+    setup_logging()
     crawler = SSIHistoricalDailyPrice()
     connector = TimescaleConnector()
     symbol_lst = get_vn100_symbols()

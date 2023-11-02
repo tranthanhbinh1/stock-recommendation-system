@@ -16,7 +16,7 @@ load_dotenv()
 
 
 @dataclass
-class MongoDBConnector:
+class MongoConnector:
     mongo_cli = MongoClient(
         host=MONGO_HOST,
         port=int(MONGO_PORT),
@@ -28,7 +28,14 @@ class MongoDBConnector:
     col_balance_sheet = db["balance_sheet"]
     col_income_statement = db["income_statement"]
     col_cash_flow = db["cash_flow"]
-
+    
+    @classmethod
+    def insert_to_mongo(cls, collection, data):
+        try:
+            cls.db[collection].insert_one(data)
+        except Exception as e:
+            logging.error(repr(e))
+    
     @classmethod
     def query_balance_sheet(symbol: str):
         pass
