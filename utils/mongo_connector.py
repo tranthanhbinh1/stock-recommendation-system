@@ -32,7 +32,7 @@ class MongoConnector:
     @classmethod
     def insert_to_mongo(cls, collection, data):
         try:
-            cls.db[collection].insert_one(data)
+            cls.db[collection].insert_many(data)
         except Exception as e:
             logging.error(repr(e))
     
