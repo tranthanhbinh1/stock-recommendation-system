@@ -167,3 +167,5 @@ cython_debug/
 
 venv
 test.json
+
+.idea

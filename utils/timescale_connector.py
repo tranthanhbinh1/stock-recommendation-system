@@ -15,4 +15,7 @@ class TimescaleConnector():
     
     @classmethod
     def query_ohlcv_daily(cls):
-        pass
+        query = """
+        SELECT * FROM market_data.ssi_daily_ohlcv
+        """
+        return pd.read_sql(query, cls.conn_str)
