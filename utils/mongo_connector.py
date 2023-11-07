@@ -11,7 +11,6 @@ from config.default import (
     MONGO_AUTH_DB,
 )
 
-
 load_dotenv()
 
 
@@ -28,14 +27,14 @@ class MongoConnector:
     col_balance_sheet = db["balance_sheet"]
     col_income_statement = db["income_statement"]
     col_cash_flow = db["cash_flow"]
-    
+
     @classmethod
     def insert_to_mongo(cls, collection, data):
         try:
             cls.db[collection].insert_many(data)
         except Exception as e:
             logging.error(repr(e))
-    
+
     @classmethod
     def query_balance_sheet(symbol: str):
         pass

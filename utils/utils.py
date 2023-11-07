@@ -1,4 +1,4 @@
-import logging
+# import logging
 
 # Convert column names from CamelCase to snake_case to follow database naming convention
 def camel_to_snake(name):
