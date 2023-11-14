@@ -15,5 +15,8 @@ class GetFinRatio():
     
     @classmethod
     def get_financial_ratios(
-        lang
+        lang: str = "vn",
+        url: str = DEFAULT_URL,
+        symbol: str,
+        timeline: str = "2017_01"
     )
