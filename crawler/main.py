@@ -14,13 +14,12 @@ def main():
         for type in fin_stm_type:
             for page in fin_page:
                 try:
-                    get_fin_instance = GetFinancialStatement(
-                        organ_code=symbol, statement_type=type, page=page)
+                    get_fin = GetFinancialStatement()
+                    get_fin(symbol=symbol, statement_type=type, page=page)
                     print("Successfully crawled data for: ", symbol, type, page)
                 except Exception as e:
                     print("Error: ", e)
-                
-            
+
 
 if __name__ == "__main__":
     main()

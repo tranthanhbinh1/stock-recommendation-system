@@ -9,14 +9,14 @@ PageType = typing.Literal[0, 8, 16]
 
 
 class GetFinancialStatement:
-    def __init__(self, organ_code: str, statement_type: StatementType, page: PageType):
-        self.organ_code = organ_code
+    def __init__(self, symbol: str, statement_type: StatementType, page: PageType):
+        self.symbol = symbol
         self.statement_type = statement_type
         self.page = page
         self.get_data()
 
     def get_data(self):
-        url = f"https://fiin-fundamental.ssi.com.vn/FinancialStatement/Download{self.statement_type}?language=en&OrganCode={self.organ_code}&Skip={self.page}&Frequency=Quarterly"
+        url = f"https://fiin-fundamental.ssi.com.vn/FinancialStatement/Download{self.statement_type}?language=en&OrganCode={self.symbol}&Skip={self.page}&Frequency=Quarterly"
 
         headers = {
             "authority": "fiin-fundamental.ssi.com.vn",
@@ -37,7 +37,7 @@ class GetFinancialStatement:
 
         if response.status_code == 200:
             with open(
-                f"financial_statements/{self.page}/{self.statement_type}_{self.organ_code}_{self.page}.xlsx", "wb"
+                f"financial_statements/{self.page}/{self.statement_type}_{self.symbol}_{self.page}.xlsx", "wb"
             ) as f:
                 f.write(response.content)
 
@@ -59,11 +59,11 @@ class GetFinancialStatement:
         #     df.columns = df.columns.astype(str)
 
         #     self.df = df  # Typecast all to string to -> parquet
-        #     self.df.to_parquet(f"financial_statements/{self.statement_type}_{self.organ_code}.parquet")
+        #     self.df.to_parquet(f"financial_statements/{self.statement_type}_{self.symbol}.parquet")
         # Transform DF to Parquet and upload to S3
         # TODO: add from_year and to_year
         # df_to_s3_parquet(df=self.df, bucket_name="fiinpro-api",
-        #                  file_name=f"FinancialStatement/{self.statement_type}_{self.organ_code}")
+        #                  file_name=f"FinancialStatement/{self.statement_type}_{self.symbol}")
 
 
 # if __name__ == "__main__":

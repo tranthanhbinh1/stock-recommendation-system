@@ -1,22 +1,96 @@
 from crawler.get_vn100 import get_vn100_symbols
 from config.logging_config import setup_logging
 from utils.timescale_connector import TimescaleConnector
-from config.default import SSI_HEADERS
-from datetime import datetime
+from utils.utils import camel_to_snake
+from config.default import SSI_FIIN_HEADERS, SSI_DOWNLOAD_FIN_RATIO_URL
 from dataclasses import dataclass
+from io import BytesIO
 import requests
 import logging
+import time
 import pandas as pd
 
 
 @dataclass
-class GetFinRatio():
-    DEFAULT_URL = "https://fiin-fundamental.ssi.com.vn/FinancialAnalysis/GetFinancialRatioV2"
-    
+class GetFinRatio:
     @classmethod
     def get_financial_ratios(
-        lang: str = "vn",
-        url: str = DEFAULT_URL,
-        symbol: str,
-        timeline: str = "2017_01"
-    )
+        cls,
+        symbol: str = "VIC",
+        timeline_from: str = "2016_4",
+    ) -> pd.DataFrame:
+        logging.info(f"Getting financial ratios of {symbol}")
+        URL = SSI_DOWNLOAD_FIN_RATIO_URL.format(
+            symbol=symbol, timeline_from=timeline_from
+        )
+        try:
+            response = requests.get(
+                url=URL,
+                headers=SSI_FIIN_HEADERS,
+            )
+            buffer = BytesIO(response.content)
+        except Exception as e:
+            logging.error(repr(e))
+
+        try:
+            df_ = pd.read_excel(buffer)
+        except Exception as e:
+            logging.error(repr(e))
+
+        return df_
+
+    @staticmethod
+    def fin_ratio_transformer(df_: pd.DataFrame, symbol: str):
+        # Reset and drop Indexes
+        df_ = df_.iloc[6:]
+        df_ = df_.iloc[:-4]  # Drop the "powered by fiintrade"
+        df_ = df_.reset_index(drop=True)
+        # Tranpose and reset the index again
+        df_ = df_.transpose().reset_index(drop=True)
+        # Set the first row as headers
+        new_headers = df_.iloc[0]
+        df_ = df_[1:]
+        df_.columns = new_headers
+        cols = pd.Series(df_.columns)
+        # Remove the duplicated symbol columns
+        for dup in cols[cols.duplicated()].unique():
+            cols[cols[cols == dup].index.values.tolist()] = [
+                dup + "_" + str(i) if i != 0 else dup for i in range(sum(cols == dup))
+            ]
+        df_.columns = cols
+
+        # fmt: off
+        symbols_columns = df_.columns[df_.columns.astype(str).str.contains(symbol)].tolist()
+        valid_columns = df_.columns[~df_.columns.astype(str).str.contains(symbol)].to_list()
+        valid_columns_final = [col for col in valid_columns if col not in ["Ratio", "Profit Growth (%)", "Revenue Growth (%)"]]
+
+        # fmt: on
+        # Name mapping from tickers to valid names
+        name_mapping = dict(zip(symbols_columns, valid_columns_final))
+
+        # Remove the empty columns first
+        df_ = df_.drop(columns=valid_columns)
+
+        # Rename
+        df_.rename(columns=name_mapping, inplace=True)
+
+        return df_
+
+    @classmethod
+    def insert_financial_ratios(
+        cls,
+        symbol: str = "VIC",
+        timeline_from: str = "2016_4",
+    ) -> None:
+        df_ = cls.get_financial_ratios(symbol, timeline_from)
+        df_.columns = [camel_to_snake(str(col)) for col in df_.columns]
+
+        TimescaleConnector.insert(df_, "market_data", "financial_ratios")
+
+
+if __name__ == "__main__":
+    setup_logging()
+    symbol_lst = get_vn100_symbols()
+    for symbol in symbol_lst:
+        GetFinRatio.insert_financial_ratios(symbol)
+        time.sleep(1)
