@@ -76,21 +76,18 @@ class GetFinRatio:
 
         return df_
 
-    @classmethod
-    def insert_financial_ratios(
-        cls,
-        symbol: str = "VIC",
-        timeline_from: str = "2016_4",
-    ) -> None:
-        df_ = cls.get_financial_ratios(symbol, timeline_from)
-        df_.columns = [camel_to_snake(str(col)) for col in df_.columns]
+    @staticmethod
+    def insert_financial_ratios(df: pd.DataFrame) -> None:
+        df.columns = [camel_to_snake(str(col)) for col in df.columns]
 
-        TimescaleConnector.insert(df_, "market_data", "financial_ratios")
+        TimescaleConnector.insert(df, "market_data", "financial_ratios")
 
 
 if __name__ == "__main__":
     setup_logging()
     symbol_lst = get_vn100_symbols()
     for symbol in symbol_lst:
-        GetFinRatio.insert_financial_ratios(symbol)
-        time.sleep(1)
+        df_ = GetFinRatio.get_financial_ratios(symbol)
+        df_ = GetFinRatio.fin_ratio_transformer(df_, symbol)
+        GetFinRatio.insert_financial_ratios(df_)
+        time.sleep(0.5)
