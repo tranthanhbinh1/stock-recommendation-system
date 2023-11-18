@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from io import BytesIO
 import requests
 import logging
-import time
 import pandas as pd
 
 
@@ -93,6 +92,3 @@ if __name__ == "__main__":
         merged_df = pd.merge(merged_df, df_, how="outer")
         merged_df.to_csv("financial_ratios.csv")
     GetFinRatio.insert_financial_ratios(merged_df)
-    # time.sleep(0.5)
-
-# TODO: not usable yet
