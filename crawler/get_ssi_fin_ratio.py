@@ -1,7 +1,7 @@
 from crawler.get_vn100 import get_vn100_symbols
 from config.logging_config import setup_logging
 from utils.timescale_connector import TimescaleConnector
-from utils.utils import camel_to_snake
+from utils.utils import convert_camel_to_snake
 from config.default import SSI_FIIN_HEADERS, SSI_DOWNLOAD_FIN_RATIO_URL
 from dataclasses import dataclass
 from io import BytesIO
@@ -34,10 +34,11 @@ class GetFinRatio:
 
         try:
             df_ = pd.read_excel(buffer)
+            return df_
         except Exception as e:
             logging.error(repr(e))
+            return pd.DataFrame()
 
-        return df_
 
     @staticmethod
     def fin_ratio_transformer(df_: pd.DataFrame, symbol: str):
@@ -70,6 +71,7 @@ class GetFinRatio:
 
         # Remove the empty columns first
         df_ = df_.drop(columns=valid_columns)
+        df_.assign(symbol=symbol)
 
         # Rename
         df_.rename(columns=name_mapping, inplace=True)
@@ -78,7 +80,7 @@ class GetFinRatio:
 
     @staticmethod
     def insert_financial_ratios(df: pd.DataFrame) -> None:
-        df.columns = [camel_to_snake(str(col)) for col in df.columns]
+        df.columns = [convert_camel_to_snake(str(col)) for col in df.columns]
 
         TimescaleConnector.insert(df, "market_data", "financial_ratios")
 
@@ -88,6 +90,10 @@ if __name__ == "__main__":
     symbol_lst = get_vn100_symbols()
     for symbol in symbol_lst:
         df_ = GetFinRatio.get_financial_ratios(symbol)
+        if df_.empty:
+            continue
         df_ = GetFinRatio.fin_ratio_transformer(df_, symbol)
-        GetFinRatio.insert_financial_ratios(df_)
+        # GetFinRatio.insert_financial_ratios(df_)
         time.sleep(0.5)
+
+#TODO: not usable yet

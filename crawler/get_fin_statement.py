@@ -2,7 +2,7 @@ import typing
 import requests
 import io
 import pandas as pd
-from utils.s3_connector import df_to_s3_parquet
+# from utils.s3_connector import df_to_s3_parquet
 
 StatementType = typing.Literal["BalanceSheet", "IncomeStatement", "CashFlow"]
 PageType = typing.Literal[0, 8, 16]
