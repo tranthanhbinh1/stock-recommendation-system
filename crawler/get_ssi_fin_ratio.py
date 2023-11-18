@@ -39,9 +39,8 @@ class GetFinRatio:
             logging.error(repr(e))
             return pd.DataFrame()
 
-
     @staticmethod
-    def fin_ratio_transformer(df_: pd.DataFrame, symbol: str):
+    def fin_ratio_transformer(df_: pd.DataFrame, symbol: str) -> pd.DataFrame:
         # Reset and drop Indexes
         df_ = df_.iloc[6:]
         df_ = df_.iloc[:-4]  # Drop the "powered by fiintrade"
@@ -52,48 +51,48 @@ class GetFinRatio:
         new_headers = df_.iloc[0]
         df_ = df_[1:]
         df_.columns = new_headers
-        cols = pd.Series(df_.columns)
-        # Remove the duplicated symbol columns
-        for dup in cols[cols.duplicated()].unique():
-            cols[cols[cols == dup].index.values.tolist()] = [
-                dup + "_" + str(i) if i != 0 else dup for i in range(sum(cols == dup))
-            ]
-        df_.columns = cols
 
-        # fmt: off
-        symbols_columns = df_.columns[df_.columns.astype(str).str.contains(symbol)].tolist()
-        valid_columns = df_.columns[~df_.columns.astype(str).str.contains(symbol)].to_list()
-        valid_columns_final = [col for col in valid_columns if col not in ["Ratio", "Profit Growth (%)", "Revenue Growth (%)"]]
+        # Fill the columns with corresponding values
+        df_.fillna(method="bfill", inplace=True, axis=1)
 
-        # fmt: on
-        # Name mapping from tickers to valid names
-        name_mapping = dict(zip(symbols_columns, valid_columns_final))
+        # Remove the column that contains symbol names
+        df_.drop(columns=symbol, inplace=True)
 
-        # Remove the empty columns first
-        df_ = df_.drop(columns=valid_columns)
-        df_.assign(symbol=symbol)
+        # Convert column names from camelCase to snake_case
+        df_.columns = df_.columns.map(convert_camel_to_snake)
+        df_.columns = [col.replace(" ", "_") for col in df_.columns]
 
-        # Rename
-        df_.rename(columns=name_mapping, inplace=True)
+        # Assign a new column symbol
+        df_ = df_.assign(symbol=symbol)
+        # Rename ratio to quarter
+        df_.rename(columns={"ratio": "quarter"}, inplace=True)
 
         return df_
 
     @staticmethod
     def insert_financial_ratios(df: pd.DataFrame) -> None:
-        df.columns = [convert_camel_to_snake(str(col)) for col in df.columns]
-
-        TimescaleConnector.insert(df, "market_data", "financial_ratios")
+        # Set the insert strat as "replace" for first time insertion, then "append"
+        TimescaleConnector.insert(df, "financial_ratios", "financial_ratios", "replace")
 
 
 if __name__ == "__main__":
     setup_logging()
     symbol_lst = get_vn100_symbols()
+    # Merge all dfs to create 1 big table
+    merged_df = pd.DataFrame()
     for symbol in symbol_lst:
         df_ = GetFinRatio.get_financial_ratios(symbol)
         if df_.empty:
             continue
         df_ = GetFinRatio.fin_ratio_transformer(df_, symbol)
-        # GetFinRatio.insert_financial_ratios(df_)
-        time.sleep(0.5)
+        # Logging out the df to check
+        logging.info(df_.head())
+        if merged_df.empty:
+            merged_df = df_
+            continue
+        merged_df = pd.merge(merged_df, df_, how="outer")
+        merged_df.to_csv("financial_ratios.csv")
+    GetFinRatio.insert_financial_ratios(merged_df)
+    # time.sleep(0.5)
 
-#TODO: not usable yet
+# TODO: not usable yet
