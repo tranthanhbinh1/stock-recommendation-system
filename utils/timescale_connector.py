@@ -30,3 +30,17 @@ class TimescaleConnector:
         WHERE symbol = '{symbol}'
         """
         return pd.read_sql(query, cls.conn_str)
+    
+    @classmethod
+    def query_ohlcv_all(cls) -> pd.DataFrame:
+        query = """
+        SELECT * FROM market_data.ssi_daily_ohlcv
+        """
+        return pd.read_sql(query, cls.conn_str)
+
+    @classmethod
+    def query_financial_ratios(cls) -> pd.DataFrame:
+        query = """
+        SELECT * FROM financial_ratios.financial_ratios
+        """
+        return pd.read_sql(query, cls.conn_str)
