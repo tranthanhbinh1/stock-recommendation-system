@@ -17,8 +17,8 @@ class SSIHistoricalDailyPrice:
     def get_historical_daily_price(
         cls,
         symbol: str,
-        from_date: str = "2017-01-01",
-        to_date: str = "2023-09-30",
+        from_date: str = TimescaleConnector.get_last_call_date_hist_prices(),
+        to_date: str = datetime.today().strftime("%Y-%m-%d"),
         URL: str = DEFAULT_URL,
     ):
         from_timestamp = int(datetime.strptime(from_date, "%Y-%m-%d").timestamp())

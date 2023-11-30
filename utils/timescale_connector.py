@@ -30,7 +30,7 @@ class TimescaleConnector:
         WHERE symbol = '{symbol}'
         """
         return pd.read_sql(query, cls.conn_str)
-    
+
     @classmethod
     def query_ohlcv_all(cls) -> pd.DataFrame:
         query = """
@@ -44,3 +44,13 @@ class TimescaleConnector:
         SELECT * FROM financial_ratios.financial_ratios
         """
         return pd.read_sql(query, cls.conn_str)
+
+    @classmethod
+    def get_last_call_date_hist_prices(cls) -> pd.DataFrame:
+        query = """
+        SELECT MAX(date) FROM market_data.ssi_daily_ohlcv
+        """
+        # return max + 1 day
+        return (
+            pd.read_sql(query, cls.conn_str).iloc[0, 0] + pd.Timedelta(days=1)
+        ).strftime("%Y-%m-%d")
