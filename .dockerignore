@@ -1,0 +1,8 @@
+#All ipynb files
+*.ipynb
+data/
+models/
+
+# cache
+__pycache__/
+.idea/
