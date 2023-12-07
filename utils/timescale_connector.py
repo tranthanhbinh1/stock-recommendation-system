@@ -2,6 +2,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 from config.default import TS_DATABASE, TS_HOST, TS_PORT, TS_USERNAME, TS_PASSWORD
 from dataclasses import dataclass
+from datetime import datetime
 
 
 @dataclass
@@ -54,3 +55,12 @@ class TimescaleConnector:
         return (
             pd.read_sql(query, cls.conn_str).iloc[0, 0] + pd.Timedelta(days=1)
         ).strftime("%Y-%m-%d")
+
+    @classmethod
+    def get_latest_quarter_fin_ratios(cls) -> str:
+        query = f"""
+        SELECT MAX(ratio) 
+        FROM financial_ratios.financial_ratios
+        WHERE ratio LIKE '%%{str(datetime.now().year)}%%'   
+        """
+        return pd.read_sql(query, cls.conn_str)
