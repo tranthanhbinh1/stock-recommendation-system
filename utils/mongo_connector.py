@@ -1,6 +1,5 @@
 from dotenv import load_dotenv
 import logging
-import os
 from pymongo import MongoClient
 from dataclasses import dataclass
 from config.default import (
