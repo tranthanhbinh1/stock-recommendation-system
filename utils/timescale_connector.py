@@ -30,7 +30,9 @@ class TimescaleConnector:
         SELECT * FROM market_data.ssi_daily_ohlcv
         WHERE symbol = '{symbol}'
         """
-        return pd.read_sql(query, cls.conn_str)
+        return pd.read_sql(
+            query, cls.conn_str, index_col=["date"], parse_dates=["date"]
+        )
 
     @classmethod
     def query_ohlcv_all(cls) -> pd.DataFrame:
