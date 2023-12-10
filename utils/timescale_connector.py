@@ -47,9 +47,10 @@ class TimescaleConnector:
         return pd.read_sql(query, cls.conn_str)
 
     @classmethod
-    def get_last_call_date_hist_prices(cls) -> pd.DataFrame:
-        query = """
+    def get_last_call_date_hist_prices(cls, symbol) -> pd.DataFrame:
+        query = f"""
         SELECT MAX(date) FROM market_data.ssi_daily_ohlcv
+        WHERE symbol = '{symbol}'
         """
         # return max + 1 day
         return (
@@ -64,3 +65,11 @@ class TimescaleConnector:
         WHERE ratio LIKE '%%{str(datetime.now().year)}%%'   
         """
         return pd.read_sql(query, cls.conn_str)
+
+    @classmethod
+    def get_symbols(cls) -> pd.DataFrame:
+        query = """
+        SELECT DISTINCT symbol 
+        FROM market_data.ssi_daily_ohlcv;
+        """
+        return pd.read_sql(query, cls.conn_str).symbol.to_list()

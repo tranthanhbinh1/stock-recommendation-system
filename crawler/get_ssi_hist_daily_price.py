@@ -17,10 +17,11 @@ class SSIHistoricalDailyPrice:
     def get_historical_daily_price(
         cls,
         symbol: str,
-        from_date: str = TimescaleConnector.get_last_call_date_hist_prices(),
+        # from_date: str = datetime.today().strftime("%Y-%m-%d"),
         to_date: str = datetime.today().strftime("%Y-%m-%d"),
         URL: str = DEFAULT_URL,
-    ):
+    ):  
+        from_date = TimescaleConnector.get_last_call_date_hist_prices(symbol)
         from_timestamp = int(datetime.strptime(from_date, "%Y-%m-%d").timestamp())
         to_timestamp = int(datetime.strptime(to_date, "%Y-%m-%d").timestamp())
 
@@ -76,12 +77,13 @@ if __name__ == "__main__":
     setup_logging()
     crawler = SSIHistoricalDailyPrice()
     connector = TimescaleConnector()
-    symbol_lst = get_vn100_symbols()
+    symbol_lst = TimescaleConnector.get_symbols()
+    logging.info(symbol_lst)
     for symbol in symbol_lst:
         logging.info(f"Getting data for {symbol}")
         try:
             df_ = crawler.get_historical_daily_price(symbol=symbol)
-            connector.insert(df=df_, schema="market_data",table_name="ssi_daily_ohlcv")
+            TimescaleConnector.insert(df=df_, schema="market_data",table_name="ssi_daily_ohlcv")
         except Exception as e:
             logging.error(repr(e))
     logging.info("Done!")
