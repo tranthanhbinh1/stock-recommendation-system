@@ -1,32 +1,12 @@
-# # Data preparation
-
-
 import warnings
 from scipy.stats import trim_mean
-
-# Ignoring future warnings and deprecation warnings so as not to make the notebook full of warnings
-warnings.filterwarnings("ignore")
-
 from scipy.optimize import minimize
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
+from utils.timescale_connector import TimescaleConnector
 
-df = pd.read_csv(
-    "C:/Users/admin/OneDrive/Desktop/Personal Items/Stock Recommendation System Project/financial_ratios.csv"
-)
-df.head()
-
-
-df.shape
-
-
-df.info()
-
-
-null_counts = df.isnull().sum()
-null_counts
-
+df = TimescaleConnector.query_financial_ratios()
 
 df = df.drop(
     [
@@ -67,17 +47,6 @@ df = df.drop(
     axis=1,
 )
 
-
-df.head()
-
-
-rows_with_null_roe = df[df["roe_(%)"].isnull()]
-
-rows_with_null_roe.head()
-
-
-from scipy.stats import trim_mean
-
 trimmed_mean_roe = trim_mean(df["roe_(%)"].dropna(), 0.1)
 
 df["roe_(%)"].fillna(trimmed_mean_roe, inplace=True)
@@ -98,32 +67,10 @@ revenue_null_value = df[df["revenue"].isnull()]
 revenue_null_value.head(5)
 
 
-df = df.dropna()
+financial_ratios_cleaned = df.dropna()
 
-
-null_counts = df.isnull().sum()
-null_counts
-
-
-df.head()
-
-
-df.info()
-
-
-df.to_csv(
-    "C:/Users/Admin/OneDrive/Desktop/Personal Items/Stock Recommendation System Project/financial_ratios_cleaned.csv"
-)
-
-
-# # Rule-based for medium and long-term trading
-
-
-# ### Industry sector analysis
-
-
-
-
+#Rule-based for medium and long-term trading
+#Industry sector analysis
 df_VNINDEX = pd.read_csv(
     "C:/Users/Admin/OneDrive/Desktop/Personal Items/Stock Recommendation System Project/Dữ liệu Lịch sử VN Index.csv"
 )
@@ -607,7 +554,7 @@ ranked_stocks.to_excel(
 )
 
 
-#region Trading bot
+# region Trading bot
 # # Trading bot
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -671,14 +618,13 @@ print("\nSell Signals:")
 for signal in sell_signals:
     print(signal)
 
-#endregion
+# endregion
 
-#region Modern Porfolio Theory
-
+# region Modern Porfolio Theory
 
 
 portfolio_annual_return
-#endregion
+# endregion
 
 
 # #### Calculate annual return of VN-INDEX
