@@ -1,6 +1,5 @@
 import requests
 import logging
-import json
 from datetime import datetime, timedelta
 from dataclasses import dataclass
 from config.default import FIREANT_HEADERS
@@ -20,12 +19,21 @@ class FireantHistoricalVnIndex:
             "endDate": datetime.now().strftime("%Y-%m-%d"),
             "limit": 1000,
         }
-        response = requests.get(
-            url=cls.DEFAULT_URL, params=payload, headers=FIREANT_HEADERS
-        )
-        data = response.json()
-        df_ = pd.DataFrame(data)
+        try:
+            response = requests.get(
+                url=cls.DEFAULT_URL, params=payload, headers=FIREANT_HEADERS
+            )
+            data = response.json()
+            df = pd.DataFrame(data)
+        except Exception as e:
+            logging.error(repr(e))
+            exit
 
+        return df
+
+    @classmethod
+    def transform_data(cls) -> pd.DataFrame:
+        df_ = FireantHistoricalVnIndex.get_fireant_historical_vnindex()
         df = pd.DataFrame().assign(
             date=df_.date,
             open=df_.priceOpen,
@@ -37,14 +45,11 @@ class FireantHistoricalVnIndex:
         # reverse the order of the df
         df = df[::-1]
         # Shift this up 1 row
-        df["percent_change"] = (df["close"] - df["close"].shift(1) ) / df["close"] * 100
-
-        return df
-
+        df["percent_change"] = (df["close"] - df["close"].shift(1)) / df["close"] * 100
 
 if __name__ == "__main__":
     setup_logging()
-    df = FireantHistoricalVnIndex.get_fireant_historical_vnindex()
+    df = FireantHistoricalVnIndex.transform_data()
     TimescaleConnector.insert(
         df=df,
         table_name="historical_vnindex",

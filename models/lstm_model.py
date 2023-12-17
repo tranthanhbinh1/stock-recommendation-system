@@ -1,6 +1,6 @@
-
 import sys
-sys.path.append('..')
+
+sys.path.append("..")
 
 import torch
 from torch import nn
@@ -15,6 +15,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from utils.timescale_connector import TimescaleConnector
+import logging
+from config.logging_config import setup_logging
+
+setup_logging()
 
 
 symbol_lts = TimescaleConnector.get_symbols()
@@ -26,22 +30,13 @@ for symbol in symbol_lts:
 
 # Prices prior to 2023 as a training set and the rest as test set
 def split(dataframe, border, col):
-    return dataframe.loc[:border,col], dataframe.loc[border:,col]
+    return dataframe.loc[:border, col], dataframe.loc[border:, col]
+
 
 df_new = {}
 for stock in symbol_lts:
     df_new[stock] = {}
     df_new[stock]["Train"], df_new[stock]["Test"] = split(df_[stock], "2023", "close")
-
-
-for i in symbol_lts[:5]:
-    plt.figure(figsize=(14,4))
-    plt.plot(df_new[i]["Train"])
-    plt.plot(df_new[i]["Test"])
-    plt.ylabel("Price")
-    plt.xlabel("Date")
-    plt.legend(["Training Set", "Test Set"])
-    plt.title(i + " Closing Stock Price")
 
 
 # Scaling the training set
@@ -50,31 +45,31 @@ transform_test = {}
 scaler = {}
 
 for num, i in enumerate(symbol_lts):
-    sc = MinMaxScaler(feature_range=(0,1))
+    sc = MinMaxScaler(feature_range=(0, 1))
     a0 = np.array(df_new[i]["Train"])
     a1 = np.array(df_new[i]["Test"])
-    a0 = a0.reshape(a0.shape[0],1)
-    a1 = a1.reshape(a1.shape[0],1)
+    a0 = a0.reshape(a0.shape[0], 1)
+    a1 = a1.reshape(a1.shape[0], 1)
     transform_train[i] = sc.fit_transform(a0)
     transform_test[i] = sc.fit_transform(a1)
     scaler[i] = sc
-    
+
 del a0
 del a1
 
 
 for i in transform_train.keys():
-    print(i, transform_train[i].shape)
-print("\n")    
+    logging.info(i, transform_train[i].shape)
+logging.info("\n")
 for i in transform_test.keys():
-    print(i, transform_test[i].shape)
+    logging.info(i, transform_test[i].shape)
 
 
 # Check the average length of the training set
 length = []
 for i in transform_train.keys():
     length.append(transform_train[i].shape[0])
-print("Average length of the training set: ", np.mean(length))
+logging.info("Average length of the training set: ", np.mean(length))
 
 
 keys_to_delete = []
@@ -86,12 +81,6 @@ for key in keys_to_delete:
     del transform_train[key]
     del transform_test[key]
     del scaler[key]
-
-
-
-#Check the length of the training set
-len(transform_train)
-
 
 # Create a new symbol list from the training set
 symbol_lst_filtered = []
@@ -151,8 +140,8 @@ y_test = torch.tensor(y_test).float()
 
 
 for i in symbol_lst_filtered:
-    print("Fitting to", i)
-    print(trainset[i]["X"], trainset[i]["y"])
+    logging.info("Fitting to", i)
+    logging.info(trainset[i]["X"], trainset[i]["y"])
 
 
 # Create a DataLoader
@@ -201,17 +190,19 @@ class LSTM(nn.Module):
         super().__init__()
         self.hidden_size = hidden_size
         self.num_stacked_layers = num_stacked_layers
-
-        self.lstm = nn.LSTM(input_size, hidden_size, num_stacked_layers, 
-                            batch_first=True)
-        
+        self.lstm = nn.LSTM(
+            input_size, hidden_size, num_stacked_layers, batch_first=True
+        )
         self.fc = nn.Linear(hidden_size, 1)
 
     def forward(self, x):
         batch_size = x.size(0)
-        h0 = torch.zeros(self.num_stacked_layers, batch_size, self.hidden_size).to(device)
-        c0 = torch.zeros(self.num_stacked_layers, batch_size, self.hidden_size).to(device)
-        
+        h0 = torch.zeros(self.num_stacked_layers, batch_size, self.hidden_size).to(
+            device
+        )
+        c0 = torch.zeros(self.num_stacked_layers, batch_size, self.hidden_size).to(
+            device
+        )
         # We need to detach as we are doing truncated backpropagation through time (BPTT)
         out, (hn, cn) = self.lstm(x, (h0.detach(), c0.detach()))
         out = self.fc(out[:, -1, :])
@@ -219,16 +210,15 @@ class LSTM(nn.Module):
 
 model = LSTM(1, 6, 1)
 model.to(device)
-model
 
 
 def train_one_epoch():
     model.train(True)
     for i in symbol_lst_filtered:
-        print("Fitting to", i)
+        logging("Fitting to", i)
         running_loss = 0.0
         for epoch in range(num_epochs):
-            print(f"Epoch: {epoch + 1}")
+            logging.info(f"Epoch: {epoch + 1}")
             for batch_index, batch in enumerate(train_loaders[i]):
                 x_batch, y_batch = batch[0].to(device), batch[1].to(device)
 
@@ -240,16 +230,15 @@ def train_one_epoch():
                 loss.backward()
                 optimizer.step()
 
-                if batch_index % 100 == 99:  # print every 100 batches
+                if batch_index % 100 == 99:  # logging.info every 100 batches
                     avg_loss_across_batches = running_loss / 100
-                    print(
+                    logging.info(
                         "Batch {0}, Loss: {1:.3f}".format(
                             batch_index + 1, avg_loss_across_batches
                         )
                     )
                     running_loss = 0.0
-            print()
-
+            logging.info()
 
 
 def validate_one_epoch():
@@ -266,18 +255,21 @@ def validate_one_epoch():
 
     avg_loss_across_batches = running_loss / len(test_loaders)
 
-    print("Val Loss: {0:.3f}".format(avg_loss_across_batches))
-    print("***************************************************")
+    logging.info("Val Loss: {0:.3f}".format(avg_loss_across_batches))
+    logging.info("***************************************************")
 
+if __name__ == "__main__":
+    setup_logging()
+    model = LSTM(1, 6, 1)
+    model.to(device)
+    learning_rate = 0.001
+    num_epochs = 10
+    loss_function = nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-learning_rate = 0.001
-num_epochs = 10
-loss_function = nn.MSELoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-
-for epoch in range(num_epochs):
-    train_one_epoch()
-    validate_one_epoch()
+    for epoch in range(num_epochs):
+        train_one_epoch()
+        validate_one_epoch()
 
 
 # Predict the test
@@ -297,8 +289,6 @@ for epoch in range(num_epochs):
 #     plt.figure(figsize=(14, 6))
 #     plt.title("{} with MSE {:10.4f}".format(i, MSE))
 #     plt.plot(y_true, label='Actual Close')
-#     plt.plot(y_pred, label='Predicted Close')    
+#     plt.plot(y_pred, label='Predicted Close')
 #     plt.legend()
 #     plt.show()
-
-
