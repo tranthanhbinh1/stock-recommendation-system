@@ -208,6 +208,7 @@ class LSTM(nn.Module):
         out = self.fc(out[:, -1, :])
         return out
 
+
 model = LSTM(1, 6, 1)
 model.to(device)
 
@@ -256,7 +257,7 @@ def validate_one_epoch():
     avg_loss_across_batches = running_loss / len(test_loaders)
 
     logging.info("Val Loss: {0:.3f}".format(avg_loss_across_batches))
-    logging.info("***************************************************")
+
 
 if __name__ == "__main__":
     setup_logging()
