@@ -1,2 +1,2 @@
-# long-term-stock-recommendation-system
-A long-term stocks recommendation system
+# Rule-based-stock-recommendation-system
+A personalized stocks recommendation system
