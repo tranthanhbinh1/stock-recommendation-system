@@ -71,7 +71,7 @@ class GetFinRatio:
     @staticmethod
     def insert_financial_ratios(df: pd.DataFrame) -> None:
         # Set the insert strat as "replace" for first time insertion, then "append"
-        TimescaleConnector.insert(df, "financial_ratios", "financial_ratios", "replace")
+        TimescaleConnector.insert(df, "market_data", "financial_ratios", "replace")
 
 
 if __name__ == "__main__":

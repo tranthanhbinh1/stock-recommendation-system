@@ -55,10 +55,13 @@ class TimescaleConnector:
         WHERE symbol = '{symbol}'
         """
         # return max + 1 day
-        return (
-            pd.read_sql(query, cls.conn_str).iloc[0, 0] + pd.Timedelta(days=1)
-        ).strftime("%Y-%m-%d")
-
+        try:
+            return (
+                pd.read_sql(query, cls.conn_str).iloc[0, 0] + pd.Timedelta(days=1)
+            ).strftime("%Y-%m-%d")
+        except Exception:
+            return "2017-01-01"
+    
     @classmethod
     def get_latest_quarter_fin_ratios(cls) -> str:
         query = f"""

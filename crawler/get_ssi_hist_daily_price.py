@@ -20,7 +20,7 @@ class SSIHistoricalDailyPrice:
         # from_date: str = datetime.today().strftime("%Y-%m-%d"),
         to_date: str = datetime.today().strftime("%Y-%m-%d"),
         URL: str = DEFAULT_URL,
-    ):  
+    ):
         from_date = TimescaleConnector.get_last_call_date_hist_prices(symbol)
         from_timestamp = int(datetime.strptime(from_date, "%Y-%m-%d").timestamp())
         to_timestamp = int(datetime.strptime(to_date, "%Y-%m-%d").timestamp())
@@ -38,7 +38,7 @@ class SSIHistoricalDailyPrice:
                 params=payload,
                 headers=SSI_HEADERS,
             )
-            print(response.status_code)
+            logging.info(response.status_code)
             data = response.json()
             df_list.append(pd.DataFrame(data))
         except Exception as e:
@@ -77,13 +77,19 @@ if __name__ == "__main__":
     setup_logging()
     crawler = SSIHistoricalDailyPrice()
     connector = TimescaleConnector()
-    symbol_lst = TimescaleConnector.get_symbols()
+    try:
+        symbol_lst = TimescaleConnector.get_symbols()
+    except Exception as e:
+        logging.warning(repr(e))
+        symbol_lst = get_vn100_symbols()
     logging.info(symbol_lst)
     for symbol in symbol_lst:
         logging.info(f"Getting data for {symbol}")
         try:
             df_ = crawler.get_historical_daily_price(symbol=symbol)
-            TimescaleConnector.insert(df=df_, schema="market_data",table_name="ssi_daily_ohlcv")
+            TimescaleConnector.insert(
+                df=df_, schema="market_data", table_name="ssi_daily_ohlcv"
+            )
         except Exception as e:
             logging.error(repr(e))
     logging.info("Done!")

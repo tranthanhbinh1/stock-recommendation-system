@@ -1,4 +1,3 @@
-
 from scipy.optimize import minimize
 import numpy as np
 import pandas as pd
@@ -7,7 +6,7 @@ from scipy.stats import trim_mean
 
 
 # DEFAULT
-top_stocks = 
+# top_stocks = 
 
 # Modern Porfolio Theory
 df_porfolio_3stocks_highrisk = pd.read_csv(
