@@ -27,7 +27,6 @@ class FireantHistoricalVnIndex:
             df = pd.DataFrame(data)
         except Exception as e:
             logging.error(repr(e))
-            exit
 
         return df
 
@@ -47,9 +46,13 @@ class FireantHistoricalVnIndex:
         # Shift this up 1 row
         df["percent_change"] = (df["close"] - df["close"].shift(1)) / df["close"] * 100
 
+        return df
+
+
 if __name__ == "__main__":
     setup_logging()
     df = FireantHistoricalVnIndex.transform_data()
+    logging.info(df)
     TimescaleConnector.insert(
         df=df,
         table_name="historical_vnindex",

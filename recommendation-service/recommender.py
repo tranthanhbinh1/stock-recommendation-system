@@ -6,71 +6,48 @@ import pandas as pd
 from datetime import datetime, timedelta
 from utils.timescale_connector import TimescaleConnector
 
-df = TimescaleConnector.query_financial_ratios()
 
-df = df.drop(
-    [
-        "net_interest_income_growth_(%)",
-        "net_interest_income",
-        "fixed_asset_turnover",
-        "interest_coverage",
-        "financial_leverage",
-        "(st_+_lt_borrowings)/equity",
-        "asset_turnover",
-        "current_ratio",
-        "ebit_margin_(%)",
-        "days_payable_outstanding",
-        "quick_ratio",
-        "days_inventory_outstanding",
-        "days_sales_outstanding",
-        "roa_(%)",
-        "dept/equity",
-        "cash_ratio",
-        "bvps_(vnd)",
-        "ev/ebitda",
-        "p/cash_flow",
-        "p/s",
-        "p/b",
-        "cash_cycle",
-        "Unnamed: 0",
-    ],
-    axis=1,
-)
+# Preparing financial ratios data
+def financial_ratio():
+    _df = TimescaleConnector.query_financial_ratios()
 
+    _columns = [
+        "quarter",
+        "net_profit",
+        "profit_growth_(%)",
+        "revenue",
+        "revenue_growth_(%)",
+        "market_capital",
+        "eps_(vnd)",
+        "p/e",
+        "outstanding_share",
+        "roe_(%)",
+        "symbol",
+    ]
 
-df = df.drop(
-    [
-        "roic_(%)",
-        "net_profit_margin_(%)",
-        "gross_profit_margin_(%)",
-    ],
-    axis=1,
-)
+    _df = _df[_columns]
 
-trimmed_mean_roe = trim_mean(df["roe_(%)"].dropna(), 0.1)
+    _trimmed_mean_roe = trim_mean(_df["roe_(%)"].dropna(), 0.1)
+    _trimmed_mean_market_capital = trim_mean(_df["market_capital"].dropna(), 0.1)
+    _trimmed_mean_eps = trim_mean(_df["eps_(vnd)"].dropna(), 0.1)
+    _trimmed_mean_pe = trim_mean(_df["p/e"].dropna(), 0.1)
+    _trimmed_mean_outstanding_share = trim_mean(_df["outstanding_share"].dropna(), 0.1)
 
-df["roe_(%)"].fillna(trimmed_mean_roe, inplace=True)
+    _df["roe_(%)"].fillna(_trimmed_mean_roe, inplace=True)
+    _df["market_capital"].fillna(_trimmed_mean_market_capital, inplace=True)
+    _df["eps_(vnd)"].fillna(_trimmed_mean_eps, inplace=True)
+    _df["p/e"].fillna(_trimmed_mean_pe, inplace=True)
+    _df["outstanding_share"].fillna(_trimmed_mean_outstanding_share, inplace=True)
+
+    _revenue_null_value = _df[_df["revenue"].isnull()]
+    _revenue_null_value.head(5)
+
+    _financial_ratios_cleaned = _df.dropna()
+    return _financial_ratios_cleaned
 
 
-trimmed_mean_market_capital = trim_mean(df["market_capital"].dropna(), 0.1)
-trimmed_mean_eps = trim_mean(df["eps_(vnd)"].dropna(), 0.1)
-trimmed_mean_pe = trim_mean(df["p/e"].dropna(), 0.1)
-trimmed_mean_outstanding_share = trim_mean(df["outstanding_share"].dropna(), 0.1)
-
-df["market_capital"].fillna(trimmed_mean_market_capital, inplace=True)
-df["eps_(vnd)"].fillna(trimmed_mean_eps, inplace=True)
-df["p/e"].fillna(trimmed_mean_pe, inplace=True)
-df["outstanding_share"].fillna(trimmed_mean_outstanding_share, inplace=True)
-
-
-revenue_null_value = df[df["revenue"].isnull()]
-revenue_null_value.head(5)
-
-
-financial_ratios_cleaned = df.dropna()
-
-#Rule-based for medium and long-term trading
-#Industry sector analysis
+# Rule-based for medium and long-term trading
+# Industry sector analysis
 df_VNINDEX = pd.read_csv(
     "C:/Users/Admin/OneDrive/Desktop/Personal Items/Stock Recommendation System Project/Dữ liệu Lịch sử VN Index.csv"
 )
@@ -89,166 +66,109 @@ df_sorted.to_csv(
 )
 
 
-df_industry_sector = pd.read_csv(
-    "C:/Users/Admin/OneDrive/Desktop/Personal Items/Stock Recommendation System Project/Industry_sector_analysis.csv",
-    encoding="ISO-8859-1",
-)
-df_industry_sector.head()
+def analyze_industry_sector():
+    _df_industry_sector = pd.read_csv(
+        "/home/tb24/projects/rule-based-stock-recommendation-system/data/industry_sector_analysis.csv",
+        encoding="ISO-8859-1",
+    )
+    _df_industry_sector = _df_industry_sector.dropna()
+    # rename industry sector to industry_sector
+    _df_industry_sector.rename(
+        columns={"industry sector": "industry_sector"}, inplace=True
+    )
 
+    _corrections = {
+        "Hóa Ch?t": "Hóa Chất",
+        "Hóa ch?t": "Hóa Chất",
+        "B?t ??ng s?n": "Bất Động Sản",
+        "S?n xu?t th?c ph?m": "Sản xuất thực phẩm",
+        "D?ch v? tài chính": "Dịch vụ tài chính",
+        "Xây d?ng và v?t li?u": "Xây dựng và vật liệu",
+        "B?o hi?m nhân th?": "Bảo hiểm nhân thọ",
+        "N??c và khí ??t": "Nước và khí đốt",
+        "Ph?n m?m d?ch v? máy tính": "Phần mềm dịch vụ máy tính",
+        "Bán l?": "Bán lẻ",
+        "Lâm nghi?p và gi?y": "Lâm nghiệp và giấy",
+        "Ph?n m?m và d?ch v? máy tính": "Phần mềm và dịch vụ máy tính",
+        "S?n xu?t và phân ph?i ?i?n": "Sản xuất và phân phối điện",
+        "?i?n t? và thi?t b? ?i?n": "Điện tử và thiết bị điện",
+        "V?n t?i": "Vận tải",
+        "Kim lo?i": "Kim loại",
+        "D??c ph?m": "Dược phẩm",
+        "S?n xu?t d??c ph?m": "Sản xuất dược phẩm",
+        "S?n xu?t d?u khí": "Sản xuất dầu khí",
+        "Hàng cá nhân": "Hàng cá nhân",
+        "Thi?t b?, d?ch v? và phân ph?i d?u khí": "Thiết bị, dịch vụ và phân phối dầu khí",
+        "Công nghi?p n?ng": "Công nghiệp nặng",
+        "Bia và ?? u?ng": "Bia và đồ uống",
+        "Thi?t b? và ph?n c?ng": "Thiết bị và phần cứng",
+        "Du l?ch và gi?i trí": "Du lịch và giải trí",
+        "Ch? s? th? tr??ng chung": "Chỉ số thị trường chung",
+    }
 
-df_industry_sector = df_industry_sector.dropna()
+    _df_industry_sector.industry_sector = _df_industry_sector.industry_sector.replace(
+        _corrections
+    )
+    _df_industry_sector = _df_industry_sector.reset_index()
+    _df_industry_sector = _df_industry_sector.drop(["index"], axis=1)
 
+    _df_industry_sector.date = pd.to_datetime(_df_industry_sector.date)
+    _df_industry_sector.close = pd.to_numeric(
+        _df_industry_sector.close, errors="coerce"
+    )
+    _df_industry_sector.dropna(subset=["close"], inplace=True)
 
-df_industry_sector.isnull().sum()
+    _df_vn_index = _df_industry_sector[_df_industry_sector.symbol == "VN-Index"]
+    _df_vn_index["vn_index_change"] = _df_vn_index["close"].pct_change()
+    _df_industry_sector["stock_price_change"] = _df_industry_sector.groupby("symbol").close.pct_change()
 
+    _df_merged = _df_industry_sector.merge(
+        _df_vn_index[["date", "vn_index_change"]], on="date", how="left"
+    )
 
-unique_value = df_industry_sector["industry sector"].unique()
-unique_value
+    _grouped = _df_merged.groupby("industry_sector").agg(
+        {"stock_price_change": "mean", "vn_index_change": "mean"}
+    )
 
-
-corrections = {
-    "Hóa Ch?t": "Hóa Chất",
-    "Hóa ch?t": "Hóa Chất",
-    "B?t ??ng s?n": "Bất Động Sản",
-    "S?n xu?t th?c ph?m": "Sản xuất thực phẩm",
-    "D?ch v? tài chính": "Dịch vụ tài chính",
-    "Xây d?ng và v?t li?u": "Xây dựng và vật liệu",
-    "B?o hi?m nhân th?": "Bảo hiểm nhân thọ",
-    "N??c và khí ??t": "Nước và khí đốt",
-    "Ph?n m?m d?ch v? máy tính": "Phần mềm dịch vụ máy tính",
-    "Bán l?": "Bán lẻ",
-    "Lâm nghi?p và gi?y": "Lâm nghiệp và giấy",
-    "Ph?n m?m và d?ch v? máy tính": "Phần mềm và dịch vụ máy tính",
-    "S?n xu?t và phân ph?i ?i?n": "Sản xuất và phân phối điện",
-    "?i?n t? và thi?t b? ?i?n": "Điện tử và thiết bị điện",
-    "V?n t?i": "Vận tải",
-    "Kim lo?i": "Kim loại",
-    "D??c ph?m": "Dược phẩm",
-    "S?n xu?t d??c ph?m": "Sản xuất dược phẩm",
-    "S?n xu?t d?u khí": "Sản xuất dầu khí",
-    "Hàng cá nhân": "Hàng cá nhân",
-    "Thi?t b?, d?ch v? và phân ph?i d?u khí": "Thiết bị, dịch vụ và phân phối dầu khí",
-    "Công nghi?p n?ng": "Công nghiệp nặng",
-    "Bia và ?? u?ng": "Bia và đồ uống",
-    "Thi?t b? và ph?n c?ng": "Thiết bị và phần cứng",
-    "Du l?ch và gi?i trí": "Du lịch và giải trí",
-    "Ch? s? th? tr??ng chung": "Chỉ số thị trường chung",
-}
-
-# Replace the values
-df_industry_sector["industry sector"] = df_industry_sector["industry sector"].replace(
-    corrections
-)
-
-
-df_industry_sector = df_industry_sector.reset_index()
-
-
-df_industry_sector = df_industry_sector.drop(["index"], axis=1)
-
-
-df_industry_sector
-
-
-# Convert 'date' to datetime format
-df_industry_sector["date"] = pd.to_datetime(df_industry_sector["date"])
-
-# Convert 'close' to numeric, handling non-numeric values
-# 'coerce' will set invalid parsing to NaN
-df_industry_sector["close"] = pd.to_numeric(
-    df_industry_sector["close"], errors="coerce"
-)
-
-# Drop rows where 'close' is NaN after conversion (if any)
-df_industry_sector.dropna(subset=["close"], inplace=True)
-
-# Separate VN-Index data
-df_vn_index = df_industry_sector[df_industry_sector["symbol"] == "VN-Index"]
-
-# Calculate percentage change for VN-Index
-df_vn_index["vn_index_change"] = df_vn_index["close"].pct_change()
-
-# Calculate percentage change for each stock
-df_industry_sector["stock_price_change"] = df_industry_sector.groupby("symbol")[
-    "close"
-].pct_change()
-
-# Merge VN-Index changes back into the main DataFrame
-df_merged = df_industry_sector.merge(
-    df_vn_index[["date", "vn_index_change"]], on="date", how="left"
-)
-
-# Group by industry sector and calculate the average of stock and VN-Index changes
-grouped = df_merged.groupby("industry sector").agg(
-    {"stock_price_change": "mean", "vn_index_change": "mean"}
-)
-
-# Calculate Relative Strength (RS)
-grouped["RS"] = grouped["stock_price_change"] / grouped["vn_index_change"]
-
-# The 'RS' column now contains the Relative Strength of each industry sector
-grouped["RS"]
-
-
-# Sort the sectors based on RS in descending order
-ranked_sectors = grouped.sort_values(by="RS", ascending=False)
-
-# Reset the index to make 'industry sector' a column again, if it's the index
-ranked_sectors.reset_index(inplace=True)
-
-# Add a ranking column that starts from 1
-ranked_sectors["Ranking"] = ranked_sectors.reset_index(drop=False).index + 1
-
-ranked_sectors
+    _grouped["RS"] = _grouped["stock_price_change"] / _grouped["vn_index_change"]
+    _ranked_sectors = _grouped.sort_values(by="RS", ascending=False)
+    _ranked_sectors.reset_index(inplace=True)
+    _ranked_sectors["ranking"] = _ranked_sectors.reset_index(drop=False).index + 1
+    return _ranked_sectors
 
 
 # ### Fundamental Analysis Conditions
+# Prepare fundamental ratios data
+def process_dataframe(_df):
+    _df["eps_growth(%)"] = (
+        (_df["eps_(vnd)"] - _df.groupby("symbol")["eps_(vnd)"].shift(4))
+        / _df.groupby("symbol")["eps_(vnd)"].shift(4)
+    ) * 100
+    _df = _df.dropna()
 
+    _df["profit_growth_(%)"] *= 100
+    _df["revenue_growth_(%)"] *= 100
 
-df["eps_growth(%)"] = (
-    (df["eps_(vnd)"] - df.groupby("symbol")["eps_(vnd)"].shift(4))
-    / df.groupby("symbol")["eps_(vnd)"].shift(4)
-) * 100
-
-
-df.isnull().sum()
-
-
-df = df.dropna()
-
-
-df["profit_growth_(%)"] *= 100
-df["revenue_growth_(%)"] *= 100
-
-
-df.head(5)
-
-
-df.to_csv(
-    "C:/Users/Admin/OneDrive/Desktop/Personal Items/Stock Recommendation System Project/financial_ratios_cleaned.csv"
-)
-
-
-df_fundamental = df[
-    [
-        "ratio",
-        "net_profit",
-        "profit_growth_(%)",
-        "revenue",
-        "revenue_growth_(%)",
-        "eps_(vnd)",
-        "eps_growth(%)",
-        "roe_(%)",
-        "symbol",
+    _df_fundamental = _df[
+        [
+            "quarter",
+            "net_profit",
+            "profit_growth_(%)",
+            "revenue",
+            "revenue_growth_(%)",
+            "eps_(vnd)",
+            "eps_growth(%)",
+            "roe_(%)",
+            "symbol",
+        ]
     ]
-]
-df_fundamental
+    return _df_fundamental
 
 
 # The most recent quarter's EPS growth is greater than 15% compared to the same quarter of the previous year
 def check_eps_growth_1stcondition(df_fundamental, latest_quarter, growth_threshold):
     # Filter DataFrame for the latest quarter
-    latest_quarter_df = df_fundamental[df_fundamental["ratio"] == latest_quarter]
+    latest_quarter_df = df_fundamental[df_fundamental["quarter"] == latest_quarter]
     # Check if the EPS growth is greater than the specified threshold
     latest_quarter_df["condition_met"] = (
         latest_quarter_df["eps_growth(%)"] > growth_threshold
@@ -264,7 +184,7 @@ result_1st.head()
 # EPS growth for the two most recent quarters is greater than 15% compared to the same quarters of the previous year
 def check_eps_growth_2ndcondition(df_fundamental, recent_quarters, growth_threshold):
     # Filter DataFrame for the recent quarters
-    recent_quarter_df = df_fundamental[df_fundamental["ratio"].isin(recent_quarters)]
+    recent_quarter_df = df_fundamental[df_fundamental["quarter"].isin(recent_quarters)]
 
     # Group by stock symbol and check if EPS growth is greater than the threshold for all recent quarters
     result = recent_quarter_df.groupby("symbol").apply(
@@ -283,7 +203,7 @@ result_2nd.head()
 # Earnings Per Share (EPS) in each quarter of the last 12 months is at or near its peak
 def assess_eps_near_peak_3rdcondition(df_fundamental, year):
     # Filter DataFrame for the specified year
-    year_df = df_fundamental[df_fundamental["ratio"].str.contains(year)]
+    year_df = df_fundamental[df_fundamental["quarter"].str.contains(year)]
 
     # Function to check if EPS is at or near peak for each stock
     def is_eps_at_peak(stock_df):
@@ -311,7 +231,7 @@ result_3rd.head()
 # Most recent quarter's revenue is greater than 20% compared to the same quarter of the previous year
 def check_revenue_growth_4thcondition(df_fundamental, latest_quarter, growth_threshold):
     # Filter DataFrame for the latest quarter
-    latest_quarter_df = df_fundamental[df_fundamental["ratio"] == latest_quarter]
+    latest_quarter_df = df_fundamental[df_fundamental["quarter"] == latest_quarter]
 
     # Check if the revenue growth is greater than the specified threshold
     latest_quarter_df["condition_met"] = (
@@ -330,12 +250,12 @@ result_4th.head()
 # Accelerating revenue growth over the last three quarters
 def check_accelerating_revenue_growth_5thcondition(df_fundamental, quarters):
     # Filter DataFrame for the specified quarters
-    filtered_df = df_fundamental[df_fundamental["ratio"].isin(quarters)]
+    filtered_df = df_fundamental[df_fundamental["quarter"].isin(quarters)]
 
     # Function to check if revenue growth is accelerating for each stock
     def is_growth_accelerating(stock_df):
         # Ensure the DataFrame is sorted by quarter
-        stock_df = stock_df.sort_values(by="ratio")
+        stock_df = stock_df.sort_values(by="quarter")
         growth_rates = stock_df["revenue_growth_(%)"].tolist()
 
         # Check if each subsequent growth rate is greater than the previous
@@ -358,12 +278,12 @@ result_5th.head()
 # Accelerating profit growth over the last three quarters
 def check_accelerating_profit_growth_6thcondition(df_fundamental, quarters):
     # Filter DataFrame for the specified quarters
-    filtered_df = df_fundamental[df_fundamental["ratio"].isin(quarters)]
+    filtered_df = df_fundamental[df_fundamental["quarter"].isin(quarters)]
 
     # Function to check if revenue growth is accelerating for each stock
     def is_growth_accelerating(stock_df):
         # Ensure the DataFrame is sorted by quarter
-        stock_df = stock_df.sort_values(by="ratio")
+        stock_df = stock_df.sort_values(by="quarter")
         growth_rates = stock_df["profit_growth_(%)"].tolist()
 
         # Check if each subsequent growth rate is greater than the previous
@@ -385,7 +305,7 @@ result_6th.head()
 
 def check_roe_7thcondition(df_fundamental, current_quarter, roe_threshold):
     # Filter DataFrame for the current quarter
-    current_quarter_df = df_fundamental[df_fundamental["ratio"] == current_quarter]
+    current_quarter_df = df_fundamental[df_fundamental["quarter"] == current_quarter]
 
     # Check if the ROE is at least the specified threshold
     current_quarter_df["condition_met"] = current_quarter_df["roe_(%)"] >= roe_threshold
