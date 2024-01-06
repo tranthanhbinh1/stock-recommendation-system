@@ -543,7 +543,7 @@ for signal in sell_signals:
 # region Modern Porfolio Theory
 
 
-portfolio_annual_return
+# portfolio_annual_return
 # endregion
 
 
