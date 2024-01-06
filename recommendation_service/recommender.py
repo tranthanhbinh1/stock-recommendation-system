@@ -164,7 +164,7 @@ def process_dataframe(_df):
     ]
     return _df_fundamental
 
-
+#TODO: TURN THESE FUNCTIONS INTO A CLASS
 # The most recent quarter's EPS growth is greater than 15% compared to the same quarter of the previous year
 def check_eps_growth_1stcondition(df_fundamental, latest_quarter, growth_threshold):
     # Filter DataFrame for the latest quarter
