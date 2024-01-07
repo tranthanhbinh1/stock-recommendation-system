@@ -1,19 +1,20 @@
 import pandas as pd
-import logging
+import warnings
 from config.logging_config import setup_logging
 from dataclasses import dataclass
 
+warnings.filterwarnings("ignore")
 setup_logging()
 
 
 @dataclass
 class TechnicalAnalysis:
     df_technical: pd.DataFrame
-    
-    def __post_init__(self):    
+
+    def __post_init__(self):
         self.calculate_ema()
         self.calculate_ma()
-        
+
     # fmt: off
     # Start of Technical Rules
     # Calculate EMA34-89 for each stock

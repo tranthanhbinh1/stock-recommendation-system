@@ -1,5 +1,8 @@
 import pandas as pd
+import warnings
 from dataclasses import dataclass
+
+warnings.filterwarnings("ignore")
 
 
 @dataclass

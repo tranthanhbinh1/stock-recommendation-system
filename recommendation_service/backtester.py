@@ -23,11 +23,6 @@ class MACrossover(Strategy):
             self.position.close()
 
 
-# bt = Backtest(df_PDR, Backtester, cash=100000000, commission=0.003)
-
-# output = bt.run()
-
-
 class Backtester(Backtest):
     def __init__(self, symbol: str):
         self.symbol = symbol
@@ -49,7 +44,6 @@ class Backtester(Backtest):
             .set_index(self.technical.df_technical.index)
             .dropna()
         )
-        # self.data.to_csv("data.csv")
 
     def backtest(self):
         logging.info(self.data.info())
@@ -59,7 +53,6 @@ class Backtester(Backtest):
         return output
 
 
-# Usage:
 if __name__ == "__main__":
     backtester = Backtester(symbol="SSI")
     backtester.backtest()
