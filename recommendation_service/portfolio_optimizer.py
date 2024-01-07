@@ -9,24 +9,18 @@ from config.logging_config import setup_logging
 from recommendation_service.stock_recommender import StockRecommender
 
 setup_logging()
+logging.getLogger(__name__)
 
 
 class PortfolioOptimizer:
     def __init__(
         self,
+        recommended_stocks: pd.DataFrame,
         portfolio_size: Iterable[int] = (3, 5),
         risk_free_rate: float = 0.02,
         upper_bound: Iterable[float] = (0.5, 0.35, 0.25),
     ):
-        self.stock_recommender = StockRecommender(
-            latest_year="2023",
-            latest_quarter="Q3 2023",
-            recent_2_quarters=["Q3 2023", "Q2 2023"],
-            recent_3_quarters=["Q1 2023", "Q2 2023", "Q3 2023"],
-            growth_threshold_eps=15,
-            growth_threshold_revenue=20,
-            growth_threshold_roe=15,
-        )
+        self.recommended_stocks = recommended_stocks
         self.portfolio_size = portfolio_size
         self.risk_free_rate = risk_free_rate
         self.upper_bound = upper_bound
@@ -34,8 +28,8 @@ class PortfolioOptimizer:
 
     @lru_cache(maxsize=2)  # 3 and 5 best stocks
     def get_top_stocks(self) -> None:
-        recommended_stock = self.stock_recommender.get_recommendation()
-        self.top_stocks = recommended_stock.head(self.portfolio_size).index.tolist()
+        recommended_stocks = self.recommended_stocks
+        self.top_stocks = recommended_stocks.head(self.portfolio_size).index.tolist()
 
     def query_stock_prices(self) -> None:
         for symbol in self.top_stocks:
@@ -80,7 +74,6 @@ class PortfolioOptimizer:
             constraints=constraints,
             bounds=bounds,
         )
-        logging.info(optimized_results)
         self.optimal_weights = optimized_results.x
 
     def optimal_portfolio(self) -> None:
@@ -97,12 +90,15 @@ class PortfolioOptimizer:
         logging.info(f"Expected Annual Return: {optimal_portfolio_return:.4f}")
         logging.info(f"Expected Volatility: {optimal_portfolio_volatility:.4f}")
         logging.info(f"Sharpe Ratio: {optimal_sharpe_ratio:.4f}")
+        return (
+            optimal_portfolio_return,
+            optimal_portfolio_volatility,
+            optimal_sharpe_ratio,
+        )
 
 
 if __name__ == "__main__":
-    optimizer = PortfolioOptimizer(
-        portfolio_size=5, upper_bound=0.25
-    )
+    optimizer = PortfolioOptimizer(portfolio_size=5, upper_bound=0.25)
     optimizer.get_top_stocks()
     optimizer.query_stock_prices()
     optimizer.calculate_log_returns()

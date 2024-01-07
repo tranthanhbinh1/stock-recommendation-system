@@ -7,6 +7,7 @@ from utils.utils import filter_financial_ratio
 from config.logging_config import setup_logging
 
 setup_logging()
+logging.getLogger(__name__)
 
 
 class StockRecommender:
@@ -78,11 +79,11 @@ class StockRecommender:
             ],
             axis=1,
         )
-        combined["Total Conditions Met"] = combined.sum(axis=1)
+        combined["Total_Conditions_Met"] = combined.sum(axis=1)
 
-        stocks_ranked = combined.sort_values(by="Total Conditions Met", ascending=False)
+        stocks_ranked = combined.sort_values(by="Total_Conditions_Met", ascending=False)
         stocks_ranked["Ranking"] = (
-            stocks_ranked["Total Conditions Met"]
+            stocks_ranked["Total_Conditions_Met"]
             .rank(ascending=False, method="first")
             .astype(int)
         )
