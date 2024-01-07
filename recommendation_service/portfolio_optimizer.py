@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import logging
+from typing import Iterable
 from functools import lru_cache
 from scipy.optimize import minimize
 from utils.timescale_connector import TimescaleConnector
@@ -11,7 +12,12 @@ setup_logging()
 
 
 class PortfolioOptimizer:
-    def __init__(self, portfolio_size: int, risk_free_rate: float, upper_bound: float):
+    def __init__(
+        self,
+        portfolio_size: Iterable[int] = (3, 5),
+        risk_free_rate: float = 0.02,
+        upper_bound: Iterable[float] = (0.5, 0.35, 0.25),
+    ):
         self.stock_recommender = StockRecommender(
             latest_year="2023",
             latest_quarter="Q3 2023",
@@ -27,11 +33,11 @@ class PortfolioOptimizer:
         self.top_stocks: list = []
 
     @lru_cache(maxsize=2)  # 3 and 5 best stocks
-    def get_top_stocks(self):
+    def get_top_stocks(self) -> None:
         recommended_stock = self.stock_recommender.get_recommendation()
         self.top_stocks = recommended_stock.head(self.portfolio_size).index.tolist()
 
-    def query_stock_prices(self):
+    def query_stock_prices(self) -> None:
         for symbol in self.top_stocks:
             df = TimescaleConnector.query_ohlcv_daily(symbol)
             df = df.close
@@ -41,28 +47,28 @@ class PortfolioOptimizer:
             else:
                 self.top_stocks_df = pd.concat([self.top_stocks_df, df], axis=1)
 
-    def calculate_log_returns(self):
+    def calculate_log_returns(self) -> None:
         self.top_stocks_df = self.top_stocks_df.astype(float)
         self.log_returns = np.log(
             self.top_stocks_df / self.top_stocks_df.shift(1)
         ).dropna()
 
-    def calculate_covariance_matrix(self):
+    def calculate_covariance_matrix(self) -> None:
         self.cov_matrix_annual = self.log_returns.cov() * 252
 
-    def standard_deviation(self, weights):
+    def standard_deviation(self, weights) -> float:
         variance = weights.T @ self.cov_matrix_annual @ weights
         return np.sqrt(variance)
 
-    def expected_return(self, weights):
+    def expected_return(self, weights) -> float:
         return np.sum(self.log_returns.mean() * weights) * 252
 
-    def sharpe_ratio(self, weights, risk_free_rate):
+    def sharpe_ratio(self, weights, risk_free_rate) -> float:
         return (
             self.expected_return(weights) - risk_free_rate
         ) / self.standard_deviation(weights)
 
-    def optimize_portfolio(self):
+    def optimize_portfolio(self) -> None:
         constraints = {"type": "eq", "fun": lambda weights: np.sum(weights) - 1}
         bounds = [(0, self.upper_bound) for _ in range(len(self.top_stocks))]
         initial_weights = np.array([1 / len(self.top_stocks)] * len(self.top_stocks))
@@ -74,9 +80,10 @@ class PortfolioOptimizer:
             constraints=constraints,
             bounds=bounds,
         )
+        logging.info(optimized_results)
         self.optimal_weights = optimized_results.x
 
-    def optimal_portfolio(self):
+    def optimal_portfolio(self) -> None:
         optimal_portfolio_return = self.expected_return(self.optimal_weights)
         optimal_portfolio_volatility = self.standard_deviation(self.optimal_weights)
         optimal_sharpe_ratio = self.sharpe_ratio(
@@ -94,7 +101,7 @@ class PortfolioOptimizer:
 
 if __name__ == "__main__":
     optimizer = PortfolioOptimizer(
-        portfolio_size=3, risk_free_rate=0.02, upper_bound=0.5
+        portfolio_size=5, upper_bound=0.25
     )
     optimizer.get_top_stocks()
     optimizer.query_stock_prices()
