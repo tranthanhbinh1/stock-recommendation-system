@@ -1,8 +1,12 @@
 import pandas as pd
+import logging
 from .fundamentals_analysis import FundamentalAnalysis
 from .technical_analysis import TechnicalAnalysis
 from utils.timescale_connector import TimescaleConnector
 from utils.utils import filter_financial_ratio
+from config.logging_config import setup_logging
+
+setup_logging()
 
 
 class StockRecommender:
@@ -39,15 +43,25 @@ class StockRecommender:
         )
         self.technical = TechnicalAnalysis(df_technical=self.daily_price)
 
+    # fmt: off
     def get_recommendation(self):
+        logging.info("Checking EPS growth for the most recent quarter")
         condition_1 = self.fundamental.check_eps_growth_1stcondition().set_index("symbol")
+        logging.info("Checking EPS growth for the two most recent quarters")
         condition_2 = self.fundamental.check_eps_growth_2ndcondition()
+        logging.info("Checking EPS growth for the last 12 months")
         condition_3 = self.fundamental.assess_eps_near_peak_3rdcondition()
+        logging.info("Checking revenue growth for the most recent quarter")
         condition_4 = self.fundamental.check_revenue_growth_4thcondition().set_index("symbol")
+        logging.info("Checking revenue growth for the two most recent quarters")
         condition_5 = self.fundamental.check_accelerating_revenue_growth_5thcondition()
+        logging.info("Checking profit growth for the most recent quarter")
         condition_6 = self.fundamental.check_accelerating_profit_growth_6thcondition()
+        logging.info("Checking ROE for the most recent quarter")    
         condition_7 = self.fundamental.check_roe_7thcondition().set_index("symbol")
+        logging.info("Checking EMA34-89")
         condition_8 = self.technical.check_emacross_8thcondition()
+        logging.info("Checking MA50-150-200")
         condition_9 = self.technical.check_ma_9thcondition()
 
         combined = pd.concat(

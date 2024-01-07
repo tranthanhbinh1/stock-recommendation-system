@@ -1,9 +1,5 @@
-import warnings
 from scipy.stats import trim_mean
-from scipy.optimize import minimize
-import numpy as np
 import pandas as pd
-from datetime import datetime, timedelta
 from utils.timescale_connector import TimescaleConnector
 
 
@@ -120,7 +116,9 @@ def analyze_industry_sector():
 
     _df_vn_index = _df_industry_sector[_df_industry_sector.symbol == "VN-Index"]
     _df_vn_index["vn_index_change"] = _df_vn_index["close"].pct_change()
-    _df_industry_sector["stock_price_change"] = _df_industry_sector.groupby("symbol").close.pct_change()
+    _df_industry_sector["stock_price_change"] = _df_industry_sector.groupby(
+        "symbol"
+    ).close.pct_change()
 
     _df_merged = _df_industry_sector.merge(
         _df_vn_index[["date", "vn_index_change"]], on="date", how="left"
@@ -164,7 +162,8 @@ def process_dataframe(_df):
     ]
     return _df_fundamental
 
-#TODO: TURN THESE FUNCTIONS INTO A CLASS
+
+# TODO: TURN THESE FUNCTIONS INTO A CLASS
 # The most recent quarter's EPS growth is greater than 15% compared to the same quarter of the previous year
 def check_eps_growth_1stcondition(df_fundamental, latest_quarter, growth_threshold):
     # Filter DataFrame for the latest quarter
