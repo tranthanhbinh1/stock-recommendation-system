@@ -1,12 +1,12 @@
 import pandas as pd
 import logging
+import imgkit
+from io import BytesIO  
 from backtesting import Backtest, Strategy
 from backtesting.lib import crossover
 from .technical_analysis import TechnicalAnalysis
 from utils.timescale_connector import TimescaleConnector
 from config.logging_config import setup_logging
-from backtesting import Backtest, Strategy
-
 
 setup_logging()
 logging.getLogger(__name__)
@@ -50,8 +50,8 @@ class Backtester(Backtest):
         logging.info(self.data.info())
         bt = Backtest(self.data, MACrossover, cash=1000000000, commission=0.003)
         output = bt.run()
-        logging.info(output)
-        return output
+        plot = bt.plot()
+        return output, plot
 
 
 if __name__ == "__main__":

@@ -17,7 +17,7 @@ class PortfolioOptimizer:
         recommended_stocks: pd.DataFrame,
         portfolio_size: Union[3, 5] = 3,
         risk_free_rate: float = 0.02,
-        upper_bound: Union[0.5, 0.35, 0.25] = None,
+        upper_bound: Union[0.5, 0.35, 0.25] = None, # Equals to: High Risk, Medium Risk, Low Risk
     ):
         self.recommended_stocks = recommended_stocks
         self.portfolio_size = portfolio_size

@@ -1,5 +1,7 @@
 # import logging
 import re
+import imgkit
+from io import BytesIO
 from scipy.stats import trim_mean
 import pandas as pd
 
@@ -60,29 +62,9 @@ def filter_financial_ratio(_df: pd.DataFrame) -> pd.DataFrame:
     # _financial_ratios_cleaned = _df.dropna()
     return _df
 
-
-# # clean up the daily price
-# def process_dataframe(_df) -> pd.DataFrame:
-#     _df["eps_growth(%)"] = (
-#         (_df["eps_(vnd)"] - _df.groupby("symbol")["eps_(vnd)"].shift(4))
-#         / _df.groupby("symbol")["eps_(vnd)"].shift(4)
-#     ) * 100
-#     _df = _df.dropna()
-
-#     _df["profit_growth_(%)"] *= 100
-#     _df["revenue_growth_(%)"] *= 100
-
-#     _df_fundamental = _df[
-#         [
-#             "quarter",
-#             "net_profit",
-#             "profit_growth_(%)",
-#             "revenue",
-#             "revenue_growth_(%)",
-#             "eps_(vnd)",
-#             "eps_growth(%)",
-#             "roe_(%)",
-#             "symbol",
-#         ]
-#     ]
-#     return _df_fundamental
+# Buffer the HTML file and convert it to PNG
+def convert_html_to_png(html: str, output_path: str) -> None:
+    buffer = BytesIO()
+    buffer.write(html)
+    imgkit.from_string(buffer, output_path)
+    
