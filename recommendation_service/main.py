@@ -33,7 +33,8 @@ class RecommendationService:
         self.portfolio_optimizer.query_stock_prices()
         self.portfolio_optimizer.calculate_log_returns()
         self.portfolio_optimizer.calculate_covariance_matrix()
-        return self.portfolio_optimizer.optimize_portfolio()
+        self.portfolio_optimizer.optimize_portfolio()
+        return self.portfolio_optimizer.get_optimal_portfolio()
 
 
 if __name__ == "__main__":
@@ -49,9 +50,9 @@ if __name__ == "__main__":
     recommended_stocks = stock_recommender.get_recommendation()
     portfolio_optimizer = PortfolioOptimizer(
         recommended_stocks=recommended_stocks,
-        portfolio_size=3,
+        portfolio_size=5,
         risk_free_rate=0.02,
-        upper_bound=0.5,
+        upper_bound=0.25,
     )
     recommendation_service = RecommendationService(
         stock_recommender, portfolio_optimizer

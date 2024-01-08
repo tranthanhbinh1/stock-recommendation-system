@@ -1,12 +1,11 @@
 import pandas as pd
 import numpy as np
 import logging
-from typing import Iterable
 from functools import lru_cache
+from typing import Union
 from scipy.optimize import minimize
 from utils.timescale_connector import TimescaleConnector
 from config.logging_config import setup_logging
-from recommendation_service.stock_recommender import StockRecommender
 
 setup_logging()
 logging.getLogger(__name__)
@@ -16,9 +15,9 @@ class PortfolioOptimizer:
     def __init__(
         self,
         recommended_stocks: pd.DataFrame,
-        portfolio_size: Iterable[int] = (3, 5),
+        portfolio_size: Union[3, 5] = 3,
         risk_free_rate: float = 0.02,
-        upper_bound: Iterable[float] = (0.5, 0.35, 0.25),
+        upper_bound: Union[0.5, 0.35, 0.25] = None,
     ):
         self.recommended_stocks = recommended_stocks
         self.portfolio_size = portfolio_size
@@ -30,6 +29,7 @@ class PortfolioOptimizer:
     def get_top_stocks(self) -> None:
         recommended_stocks = self.recommended_stocks
         self.top_stocks = recommended_stocks.head(self.portfolio_size).index.tolist()
+        logging.info(f"Top {self.portfolio_size} stocks: {self.top_stocks}")
 
     def query_stock_prices(self) -> None:
         for symbol in self.top_stocks:
@@ -76,7 +76,8 @@ class PortfolioOptimizer:
         )
         self.optimal_weights = optimized_results.x
 
-    def optimal_portfolio(self) -> None:
+    def get_optimal_portfolio(self) -> None:
+        optimal_portfolio = {}
         optimal_portfolio_return = self.expected_return(self.optimal_weights)
         optimal_portfolio_volatility = self.standard_deviation(self.optimal_weights)
         optimal_sharpe_ratio = self.sharpe_ratio(
@@ -85,16 +86,16 @@ class PortfolioOptimizer:
 
         logging.info("Optimal Weights:")
         for ticker, weight in zip(self.top_stocks, self.optimal_weights):
+            optimal_portfolio[ticker] = weight
             logging.info(f"{ticker}: {weight:.4f}")
 
         logging.info(f"Expected Annual Return: {optimal_portfolio_return:.4f}")
         logging.info(f"Expected Volatility: {optimal_portfolio_volatility:.4f}")
         logging.info(f"Sharpe Ratio: {optimal_sharpe_ratio:.4f}")
-        return (
-            optimal_portfolio_return,
-            optimal_portfolio_volatility,
-            optimal_sharpe_ratio,
-        )
+        optimal_portfolio["Expected Annual Return"] = optimal_portfolio_return
+        optimal_portfolio["Expected Volatility"] = optimal_portfolio_volatility
+        optimal_portfolio["Sharpe Ratio"] = optimal_sharpe_ratio
+        return optimal_portfolio
 
 
 if __name__ == "__main__":
@@ -104,4 +105,4 @@ if __name__ == "__main__":
     optimizer.calculate_log_returns()
     optimizer.calculate_covariance_matrix()
     optimizer.optimize_portfolio()
-    optimizer.optimal_portfolio()
+    optimizer.get_optimal_portfolio()
