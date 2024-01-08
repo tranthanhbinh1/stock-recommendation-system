@@ -20,11 +20,14 @@ class RecommendationService:
     # TODO: add a Industry filter to the recommendation
     def get_ranked_stock(self):
         _df = self.stock_recommender.get_recommendation()
-        ranking = pd.DataFrame().assign(
-            symbol=_df.index,
-            number_of_conditions_met=_df["Total_Conditions_Met"],
-            rank=_df["Ranking"],
-        )
+        ranking = pd.DataFrame(
+            {
+                "symbol": _df.index,
+                "number_of_conditions_met": _df["Total_Conditions_Met"],
+                "rank": _df["Ranking"],
+            }
+        ).reset_index(drop=True)
+        ranking.to_csv("ranking.csv", index=False)
 
         return ranking
 
