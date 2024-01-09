@@ -1,6 +1,7 @@
 from .stock_recommender import StockRecommender
 from .portfolio_optimizer import PortfolioOptimizer
 from config.logging_config import setup_logging
+from typing import Literal
 import logging
 import pandas as pd
 
@@ -40,7 +41,18 @@ class RecommendationService:
         return self.portfolio_optimizer.get_optimal_portfolio()
 
 
-if __name__ == "__main__":
+def main(
+    industries: list[str] = None,
+    risk_appetite: Literal["High", "Medium", "Low"] = "Low",
+) -> tuple:
+    
+    if risk_appetite == "High":
+        risk_upper_bound = 0.25
+    elif risk_appetite == "Medium":
+        risk_upper_bound = 0.35
+    elif risk_appetite == "Low":
+        risk_upper_bound = 0.50
+    
     stock_recommender = StockRecommender(
         latest_year="2023",
         latest_quarter="Q3 2023",
@@ -49,14 +61,14 @@ if __name__ == "__main__":
         growth_threshold_eps=15,
         growth_threshold_revenue=20,
         growth_threshold_roe=15,
-        chosen_industries=["Dịch vụ tài chính", "Điện tử và thiết bị điện", "Phần mềm và dịch vụ máy tính"]
+        chosen_industries=industries,
     )
     recommended_stocks = stock_recommender.get_recommendation()
     portfolio_optimizer = PortfolioOptimizer(
         recommended_stocks=recommended_stocks,
         portfolio_size=5,
         risk_free_rate=0.02,
-        upper_bound=0.25,
+        upper_bound=risk_upper_bound,
     )
     recommendation_service = RecommendationService(
         stock_recommender, portfolio_optimizer
@@ -65,3 +77,9 @@ if __name__ == "__main__":
     optimal_portfolio = recommendation_service.get_optimized_portfolio()
     logging.info(recommended_stock)
     logging.info(optimal_portfolio)
+
+    return recommended_stock, optimal_portfolio
+
+
+if __name__ == "__main__":
+    main()

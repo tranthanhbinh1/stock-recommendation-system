@@ -1,7 +1,6 @@
 import pandas as pd
 import logging
 import imgkit
-from io import BytesIO  
 from backtesting import Backtest, Strategy
 from backtesting.lib import crossover
 from .technical_analysis import TechnicalAnalysis
@@ -25,8 +24,9 @@ class MACrossover(Strategy):
 
 
 class Backtester(Backtest):
-    def __init__(self, symbol: str):
+    def __init__(self, symbol: str, nav: int = 10000000):
         self.symbol = symbol
+        self.nav = nav
         self.technical = TechnicalAnalysis(
             df_technical=TimescaleConnector.query_ohlcv_daily(self.symbol)
         )
@@ -46,14 +46,34 @@ class Backtester(Backtest):
             .dropna()
         )
 
-    def backtest(self):
-        logging.info(self.data.info())
-        bt = Backtest(self.data, MACrossover, cash=1000000000, commission=0.003)
-        output = bt.run()
+    def get_backtest_plot(self):
+        bt = Backtest(self.data, MACrossover, cash=self.nav, commission=0.003)
+        bt.run()
         plot = bt.plot()
-        return output, plot
+        # imgkit.from_file("MACrossover.html", "out.png")
+        return plot
+
+    def get_backtest_sells_buys(self):
+        output = Backtest(self.data, MACrossover, cash=self.nav, commission=0.003).run()
+        trades = pd.DataFrame(output.get("_trades"))
+        # Change duration, entry and exit time to string
+        trades["Duration"] = trades["Duration"].astype(str)
+        trades["EntryTime"] = trades["EntryTime"].astype(str)
+        trades["ExitTime"] = trades["ExitTime"].astype(str)
+        trades = trades.to_dict(orient="records")
+        return trades
+
+    def get_backtest_summary(self):
+        output = Backtest(self.data, MACrossover, cash=self.nav, commission=0.003).run()
+
+        output.head(27).to_csv("backtest.csv")
+        output = output.head(27)
+        # Convert all to strings first
+        output = output.astype(str)
+        return output.to_dict()
 
 
 if __name__ == "__main__":
     backtester = Backtester(symbol="SSI")
-    backtester.backtest()
+    rec = backtester.get_backtest_summary()
+    print(rec)

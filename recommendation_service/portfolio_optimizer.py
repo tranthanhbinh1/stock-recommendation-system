@@ -17,7 +17,9 @@ class PortfolioOptimizer:
         recommended_stocks: pd.DataFrame,
         portfolio_size: Union[3, 5] = 3,
         risk_free_rate: float = 0.02,
-        upper_bound: Union[0.5, 0.35, 0.25] = None, # Equals to: High Risk, Medium Risk, Low Risk
+        upper_bound: Union[
+            0.5, 0.35, 0.25
+        ] = None,  # Equals to: High Risk, Medium Risk, Low Risk
     ):
         self.recommended_stocks = recommended_stocks
         self.portfolio_size = portfolio_size
@@ -78,6 +80,7 @@ class PortfolioOptimizer:
 
     def get_optimal_portfolio(self) -> None:
         optimal_portfolio = {}
+        optimal_portfolio_data = {}
         optimal_portfolio_return = self.expected_return(self.optimal_weights)
         optimal_portfolio_volatility = self.standard_deviation(self.optimal_weights)
         optimal_sharpe_ratio = self.sharpe_ratio(
@@ -86,16 +89,16 @@ class PortfolioOptimizer:
 
         logging.info("Optimal Weights:")
         for ticker, weight in zip(self.top_stocks, self.optimal_weights):
-            optimal_portfolio[ticker] = weight
+            optimal_portfolio[ticker] = round(weight, 4)
             logging.info(f"{ticker}: {weight:.4f}")
 
         logging.info(f"Expected Annual Return: {optimal_portfolio_return:.4f}")
         logging.info(f"Expected Volatility: {optimal_portfolio_volatility:.4f}")
         logging.info(f"Sharpe Ratio: {optimal_sharpe_ratio:.4f}")
-        optimal_portfolio["Expected Annual Return"] = optimal_portfolio_return
-        optimal_portfolio["Expected Volatility"] = optimal_portfolio_volatility
-        optimal_portfolio["Sharpe Ratio"] = optimal_sharpe_ratio
-        return optimal_portfolio
+        optimal_portfolio_data["Expected Annual Return"] = optimal_portfolio_return
+        optimal_portfolio_data["Expected Volatility"] = optimal_portfolio_volatility
+        optimal_portfolio_data["Sharpe Ratio"] = optimal_sharpe_ratio
+        return optimal_portfolio, optimal_portfolio_data
 
 
 if __name__ == "__main__":
