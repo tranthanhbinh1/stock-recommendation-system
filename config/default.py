@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from typing import Literal
 
 load_dotenv()
 
@@ -56,3 +57,31 @@ TS_DATABASE = os.environ["TS_DATABASE"]
 # MONGO_USERNAME = os.environ["MONGO_USERNAME"]
 # MONGO_PASSWORD = os.environ["MONGO_PASSWORD"]
 # MONGO_AUTH_DB = os.environ["MONGO_AUTH_DB"]
+
+industries_type = Literal[
+    "Dịch vụ tài chính",
+    "Điện tử và thiết bị điện",
+    "Kim loại",
+    "Xây dựng và vật liệu",
+    "Thiết bị, dịch vụ và phân phối dầu khí",
+    "Bán lẻ",
+    "Phần mềm và dịch vụ máy tính",
+    "Hóa Chất",
+    "Phần mềm dịch vụ máy tính",
+    "Vận tải",
+    "Lâm nghiệp và giấy",
+    "Bất Động Sản",
+    "Sản xuất thực phẩm",
+    "Ngân hàng",
+    "Dược phẩm",
+    "Thiết bị và phần cứng",
+    "Sản xuất và phân phối điện",
+    "Sản xuất dược phẩm",
+    "Du lịch và giải trí",
+    "Sản xuất dầu khí",
+    "Hàng cá nhân",
+    "Công nghiệp nặng",
+    "Nước và khí đốt",
+    "Bảo hiểm nhân thọ",
+    "Bia và đồ uống",
+]

@@ -49,6 +49,7 @@ if __name__ == "__main__":
         growth_threshold_eps=15,
         growth_threshold_revenue=20,
         growth_threshold_roe=15,
+        chosen_industries=["Dịch vụ tài chính", "Điện tử và thiết bị điện", "Phần mềm và dịch vụ máy tính"]
     )
     recommended_stocks = stock_recommender.get_recommendation()
     portfolio_optimizer = PortfolioOptimizer(

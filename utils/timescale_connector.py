@@ -25,6 +25,10 @@ class TimescaleConnector:
         )
 
     @classmethod
+    def query_by_sql(cls, query: str) -> pd.DataFrame:
+        return pd.read_sql(query, cls.conn_str)
+    
+    @classmethod
     def query_ohlcv_daily(cls, symbol) -> pd.DataFrame:
         query = f"""
         SELECT * FROM market_data.ssi_daily_ohlcv
@@ -41,6 +45,26 @@ class TimescaleConnector:
         """
         return pd.read_sql(query, cls.conn_str)
 
+    @classmethod
+    def query_ohlcv_1y_interval(cls) -> pd.DataFrame:
+        start_date = (datetime.now() - pd.Timedelta(days=365)).isoformat()
+        end_date = datetime.now().isoformat()   
+        query = f"""
+        SELECT * FROM market_data.ssi_daily_ohlcv
+        WHERE date >= '{start_date}' AND date <= '{end_date}'
+        """
+        return pd.read_sql(query, cls.conn_str)
+
+    @classmethod
+    def query_vnindex_1y_interval(cls) -> pd.DataFrame:
+        start_date = (datetime.now() - pd.Timedelta(days=365)).isoformat()
+        end_date = datetime.now().isoformat()   
+        query = f"""
+        SELECT * FROM market_data.historical_vnindex
+        WHERE date >= '{start_date}' AND date <= '{end_date}'
+        """
+        return pd.read_sql(query, cls.conn_str)
+    
     @classmethod
     def query_financial_ratios(cls) -> pd.DataFrame:
         query = """
@@ -61,7 +85,7 @@ class TimescaleConnector:
             ).strftime("%Y-%m-%d")
         except Exception:
             return "2017-01-01"
-    
+
     @classmethod
     def get_latest_quarter_fin_ratios(cls) -> str:
         query = f"""
