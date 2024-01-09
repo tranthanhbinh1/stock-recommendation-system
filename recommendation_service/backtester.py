@@ -1,6 +1,5 @@
 import pandas as pd
 import logging
-import imgkit
 from backtesting import Backtest, Strategy
 from backtesting.lib import crossover
 from .technical_analysis import TechnicalAnalysis
@@ -76,4 +75,3 @@ class Backtester(Backtest):
 if __name__ == "__main__":
     backtester = Backtester(symbol="SSI")
     rec = backtester.get_backtest_summary()
-    print(rec)

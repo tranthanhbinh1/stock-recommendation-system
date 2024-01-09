@@ -1,20 +1,46 @@
 from flask import Flask
 from flask import request, jsonify
+# from flask_cors import CORS
 from dotenv import load_dotenv
+import logging
+from config.logging_config import setup_logging
+import pandas as pd
+from utils.timescale_connector import TimescaleConnector, TimescaleConnnector2
 from recommendation_service.main import main
 from recommendation_service.backtester import Backtester
 import io
 import urllib, base64
 
+setup_logging()
 load_dotenv()
 app = Flask(__name__)
+# CORS(app)
+
+@app.route("/data/price", methods=["GET"])
+def get_price():
+    symbol = request.args.get("symbol", "SSI")
+    df = TimescaleConnnector2.query_update_price(symbol=symbol)
+    change = TimescaleConnnector2.query_update_change(symbol=symbol).values
+    processed_df = pd.DataFrame(
+        {
+            "code": df["symbol"],
+            "open": df["open"],
+            "high": df["high"],
+            "low": df["low"],
+            "close": df["close"],
+            "volume": df["vol"],
+            "trend": int(change),
+        }
+    )
+    return jsonify(processed_df.to_dict(orient="records"))  # Return list directly
+
 
 
 @app.route("/recommendation/customize/portfolio", methods=["GET"])
 def get_recommendation_custom_portfolio():
     sectors = request.args.getlist("sectors")
     risk_level = request.args.get(
-        "risk_level", "High"
+        "risk_level", "Low"
     )  # Default to 'High' if 'risk_level' is not provided
     recommended_stock, optimal_portfolio = main(sectors, risk_level)
     optimal_portfolio_dict = optimal_portfolio
@@ -26,10 +52,14 @@ def get_recommendation_custom_portfolio():
 
 @app.route("/recommendation/customize/ranked_stocks", methods=["GET"])
 def get_recommendation_custom_recommended_stock():
-    sectors = request.args.getlist("sectors")
-    risk_level = request.args.get(
-        "risk_level", "High"
-    )  # Default to 'High' if 'risk_level' is not provided
+    sectors = request.args.get("sectors")
+    if sectors:
+        sectors = sectors.split(",")
+    else:
+        sectors = []
+    risk_level = request.args.get("risk_level", "Low")
+    logging.info(f"sectors: {sectors}")
+    logging.info(f"risk_level: {risk_level}")
     recommended_stock, optimal_portfolio = main(sectors, risk_level)
     recommended_stock_dict = recommended_stock.to_dict(orient="records")
     return {

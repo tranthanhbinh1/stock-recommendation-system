@@ -52,6 +52,12 @@ TS_USERNAME = os.environ["TS_USERNAME"]
 TS_PASSWORD = os.environ["TS_PASSWORD"]
 TS_DATABASE = os.environ["TS_DATABASE"]
 
+TS_HOST_2 = os.environ["TS_HOST_2"]
+TS_PORT_2 = os.environ["TS_PORT_2"]
+TS_USERNAME_2 = os.environ["TS_USERNAME_2"]
+TS_PASSWORD_2 = os.environ["TS_PASSWORD_2"]
+TS_DATABASE_2 = os.environ["TS_DATABASE_2"]
+
 # MONGO_HOST = os.environ["MONGO_HOST"]
 # MONGO_PORT = os.environ["MONGO_PORT"]
 # MONGO_USERNAME = os.environ["MONGO_USERNAME"]

@@ -1,6 +1,17 @@
 import pandas as pd
 from sqlalchemy import create_engine
-from config.default import TS_DATABASE, TS_HOST, TS_PORT, TS_USERNAME, TS_PASSWORD
+from config.default import (
+    TS_DATABASE,
+    TS_HOST,
+    TS_PORT,
+    TS_USERNAME,
+    TS_PASSWORD,
+    TS_DATABASE_2,
+    TS_HOST_2,
+    TS_PORT_2,
+    TS_USERNAME_2,
+    TS_PASSWORD_2,
+)
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -27,7 +38,7 @@ class TimescaleConnector:
     @classmethod
     def query_by_sql(cls, query: str) -> pd.DataFrame:
         return pd.read_sql(query, cls.conn_str)
-    
+
     @classmethod
     def query_ohlcv_daily(cls, symbol) -> pd.DataFrame:
         query = f"""
@@ -48,7 +59,7 @@ class TimescaleConnector:
     @classmethod
     def query_ohlcv_1y_interval(cls) -> pd.DataFrame:
         start_date = (datetime.now() - pd.Timedelta(days=365)).isoformat()
-        end_date = datetime.now().isoformat()   
+        end_date = datetime.now().isoformat()
         query = f"""
         SELECT * FROM market_data.ssi_daily_ohlcv
         WHERE date >= '{start_date}' AND date <= '{end_date}'
@@ -58,13 +69,13 @@ class TimescaleConnector:
     @classmethod
     def query_vnindex_1y_interval(cls) -> pd.DataFrame:
         start_date = (datetime.now() - pd.Timedelta(days=365)).isoformat()
-        end_date = datetime.now().isoformat()   
+        end_date = datetime.now().isoformat()
         query = f"""
         SELECT * FROM market_data.historical_vnindex
         WHERE date >= '{start_date}' AND date <= '{end_date}'
         """
         return pd.read_sql(query, cls.conn_str)
-    
+
     @classmethod
     def query_financial_ratios(cls) -> pd.DataFrame:
         query = """
@@ -102,3 +113,34 @@ class TimescaleConnector:
         FROM market_data.ssi_daily_ohlcv;
         """
         return pd.read_sql(query, cls.conn_str).symbol.to_list()
+
+
+@dataclass
+class TimescaleConnnector2:
+    conn_str = f"postgresql://{TS_USERNAME_2}:{TS_PASSWORD_2}@{TS_HOST_2}:{TS_PORT_2}/{TS_DATABASE_2}"
+    connector = create_engine(conn_str)
+
+    @classmethod
+    def query_update_price(cls, symbol) -> pd.DataFrame:
+        query = f"""
+        SELECT
+            symbol,
+            ROUND(CAST(open AS numeric), 2) AS open,
+            ROUND(CAST(high AS numeric), 2) AS high,
+            ROUND(CAST(low AS numeric), 2) AS low,
+            ROUND(CAST(close AS numeric), 2) AS close,
+            vol
+        FROM ssi_iboard_ohlcv_intraday
+        WHERE symbol = '{symbol}'
+        LIMIT 1;
+        """
+        return pd.read_sql(query, cls.conn_str)
+
+    @classmethod
+    def query_update_change(cls, symbol) -> pd.DataFrame:
+        query = f"""
+        select change from ssi_iboard_trade_raw
+        where symbol = '{symbol}'
+        limit 1;
+        """
+        return pd.read_sql(query, cls.conn_str)
