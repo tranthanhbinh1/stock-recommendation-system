@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 from utils.timescale_connector import TimescaleConnector
 import logging
 from config.logging_config import setup_logging
+import bentoml
 
 setup_logging()
 
@@ -272,6 +273,9 @@ if __name__ == "__main__":
         train_one_epoch()
         validate_one_epoch()
 
+    # Save the model
+    torch.save(model.state_dict(), "model.pt")
+    bentoml.pytorch.save_model(model, "LSTM-Stock-Prediction")
 
 # Predict the test
 # from sklearn.metrics import mean_squared_error
