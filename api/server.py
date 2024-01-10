@@ -20,7 +20,7 @@ app = Flask(__name__)
 def get_price():
     symbol = request.args.get("symbol", "SSI")
     df = TimescaleConnnector2.query_update_price(symbol=symbol)
-    change = TimescaleConnnector2.query_update_change(symbol=symbol).values
+    change = TimescaleConnnector2.query_update_change(symbol=symbol).index
     processed_df = pd.DataFrame(
         {
             "code": df["symbol"],
@@ -29,7 +29,7 @@ def get_price():
             "low": df["low"],
             "close": df["close"],
             "volume": df["vol"],
-            "trend": int(change),
+            "trend": change.astype(int),
         }
     )
     return jsonify(processed_df.to_dict(orient="records"))  # Return list directly
@@ -38,16 +38,20 @@ def get_price():
 
 @app.route("/recommendation/customize/portfolio", methods=["GET"])
 def get_recommendation_custom_portfolio():
-    sectors = request.args.getlist("sectors")
-    risk_level = request.args.get(
-        "risk_level", "Low"
-    )  # Default to 'High' if 'risk_level' is not provided
+    sectors = request.args.get("sectors")
+    if sectors:
+        sectors = sectors.split(",")
+    else:
+        sectors = []
+    risk_level = request.args.get("risk_level", "Low")
+    logging.info(f"sectors: {sectors}")
+    logging.info(f"risk_level: {risk_level}")
     recommended_stock, optimal_portfolio = main(sectors, risk_level)
-    optimal_portfolio_dict = optimal_portfolio
+    recommended_stock_dict = recommended_stock.to_dict(orient="records")
     return {
-        # "recommended_stock": recommended_stock_dict,
-        "optimal_portfolio": optimal_portfolio_dict,
+        "recommended_stock": optimal_portfolio,
     }
+
 
 
 @app.route("/recommendation/customize/ranked_stocks", methods=["GET"])

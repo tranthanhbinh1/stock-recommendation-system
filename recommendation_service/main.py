@@ -28,7 +28,6 @@ class RecommendationService:
                 "rank": _df["Ranking"],
             }
         ).reset_index(drop=True)
-        ranking.to_csv("ranking.csv", index=False)
 
         return ranking
 
@@ -45,14 +44,13 @@ def main(
     industries: list[str] = None,
     risk_appetite: Literal["High", "Medium", "Low"] = "Low",
 ) -> tuple:
-    
     if risk_appetite == "High":
         risk_upper_bound = 0.25
     elif risk_appetite == "Medium":
         risk_upper_bound = 0.35
     elif risk_appetite == "Low":
         risk_upper_bound = 0.50
-    
+
     stock_recommender = StockRecommender(
         latest_year="2023",
         latest_quarter="Q3 2023",
