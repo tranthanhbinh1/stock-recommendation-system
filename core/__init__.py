@@ -12,7 +12,7 @@ class SingletonWrapper(object):
         return cls._instance
 
 
-#TODO: research and do a Thread-safe Singleton pattern here
+# TODO: research and do a Thread-safe Singleton pattern here
 class SingletonMeta(ABCMeta):
     """Implement Singleton pattern."""
 
@@ -33,6 +33,7 @@ class SingletonMeta(ABCMeta):
             cls._instances[cls] = super().__call__(*args, **kwargs)
 
         return cls._instances[cls]
+
 
 class Singleton(metaclass=SingletonMeta):
     pass

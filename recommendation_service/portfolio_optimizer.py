@@ -1,11 +1,13 @@
-import pandas as pd
-import numpy as np
 import logging
 from functools import lru_cache
 from typing import Union
+
+import numpy as np
+import pandas as pd
 from scipy.optimize import minimize
-from utils.timescale_connector import TimescaleConnector
+
 from config.logging_config import setup_logging
+from utils.timescale_connector import TimescaleConnector
 
 setup_logging()
 logging.getLogger(__name__)

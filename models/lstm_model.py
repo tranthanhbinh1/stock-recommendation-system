@@ -2,22 +2,22 @@ import sys
 
 sys.path.append("..")
 
+import logging
+
+import bentoml
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 import torch
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
 from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import ToTensor
 
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import train_test_split
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-
-from utils.timescale_connector import TimescaleConnector
-import logging
 from config.logging_config import setup_logging
-import bentoml
+from utils.timescale_connector import TimescaleConnector
 
 setup_logging()
 

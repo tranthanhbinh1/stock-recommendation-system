@@ -1,6 +1,8 @@
-import pandas as pd
 import logging
 from functools import lru_cache
+
+import pandas as pd
+
 from config.logging_config import setup_logging
 from utils.timescale_connector import TimescaleConnector
 
@@ -54,8 +56,8 @@ class SectorRanking:
         )
         logging.info(self.ranked_sectors)
         return self.ranked_sectors
-    
-    
+
+
 if __name__ == "__main__":
     sector_ranking = SectorRanking()
     sector_ranking.load_data()

@@ -1,11 +1,14 @@
-import pandas as pd
 import logging
-from .fundamentals_analysis import FundamentalAnalysis
-from .technical_analysis import TechnicalAnalysis
+
+import pandas as pd
+
+from config.default import industries_type
+from config.logging_config import setup_logging
 from utils.timescale_connector import TimescaleConnector
 from utils.utils import filter_financial_ratio
-from config.logging_config import setup_logging
-from config.default import industries_type
+
+from .fundamentals_analysis import FundamentalAnalysis
+from .technical_analysis import TechnicalAnalysis
 
 setup_logging()
 logging.getLogger(__name__)

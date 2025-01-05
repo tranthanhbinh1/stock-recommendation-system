@@ -1,4 +1,5 @@
 import typing
+
 import requests
 
 StatementType = typing.Literal["BalanceSheet", "IncomeStatement", "CashFlow"]
@@ -34,7 +35,8 @@ class GetFinancialStatement:
 
         if response.status_code == 200:
             with open(
-                f"financial_statements/{self.page}/{self.statement_type}_{self.symbol}_{self.page}.xlsx", "wb"
+                f"financial_statements/{self.page}/{self.statement_type}_{self.symbol}_{self.page}.xlsx",
+                "wb",
             ) as f:
                 f.write(response.content)
 

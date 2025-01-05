@@ -1,9 +1,10 @@
 # import logging
 import re
-import imgkit
 from io import BytesIO
-from scipy.stats import trim_mean
+
+import imgkit
 import pandas as pd
+from scipy.stats import trim_mean
 
 
 def convert_timestamp(timestamp_str):
@@ -62,9 +63,9 @@ def filter_financial_ratio(_df: pd.DataFrame) -> pd.DataFrame:
     # _financial_ratios_cleaned = _df.dropna()
     return _df
 
+
 # Buffer the HTML file and convert it to PNG
 def convert_html_to_png(html: str, output_path: str) -> None:
     buffer = BytesIO()
     buffer.write(html)
     imgkit.from_string(buffer, output_path)
-    

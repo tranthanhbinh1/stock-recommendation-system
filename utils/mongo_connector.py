@@ -1,13 +1,15 @@
-from dotenv import load_dotenv
 import logging
-from pymongo import MongoClient
 from dataclasses import dataclass
+
+from dotenv import load_dotenv
+from pymongo import MongoClient
+
 from config.default import (
+    MONGO_AUTH_DB,
     MONGO_HOST,
+    MONGO_PASSWORD,
     MONGO_PORT,
     MONGO_USERNAME,
-    MONGO_PASSWORD,
-    MONGO_AUTH_DB,
 )
 
 load_dotenv()

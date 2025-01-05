@@ -1,7 +1,9 @@
-import pandas as pd
 import warnings
-from config.logging_config import setup_logging
 from dataclasses import dataclass
+
+import pandas as pd
+
+from config.logging_config import setup_logging
 
 warnings.filterwarnings("ignore")
 setup_logging()

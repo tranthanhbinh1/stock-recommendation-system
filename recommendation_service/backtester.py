@@ -1,10 +1,13 @@
-import pandas as pd
 import logging
+
+import pandas as pd
 from backtesting import Backtest, Strategy
 from backtesting.lib import crossover
-from .technical_analysis import TechnicalAnalysis
-from utils.timescale_connector import TimescaleConnector
+
 from config.logging_config import setup_logging
+from utils.timescale_connector import TimescaleConnector
+
+from .technical_analysis import TechnicalAnalysis
 
 setup_logging()
 logging.getLogger(__name__)

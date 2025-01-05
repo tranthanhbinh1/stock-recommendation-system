@@ -1,6 +1,7 @@
-import pandas as pd
 import warnings
 from dataclasses import dataclass
+
+import pandas as pd
 
 warnings.filterwarnings("ignore")
 

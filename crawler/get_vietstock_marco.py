@@ -1,12 +1,13 @@
-import requests
-from config.default import (
-    VIET_STOCK_HEADERS,
-    GDP_PAYLOAD,
-    CPI_PAYLOAD,
-    IN_PAYLOAD,
-    EX_PAYLOAD,
-)
 import pandas as pd
+import requests
+
+from config.default import (
+    CPI_PAYLOAD,
+    EX_PAYLOAD,
+    GDP_PAYLOAD,
+    IN_PAYLOAD,
+    VIET_STOCK_HEADERS,
+)
 from utils.utils import convert_timestamp
 
 

@@ -1,19 +1,21 @@
-import pandas as pd
-from sqlalchemy import create_engine
-from config.default import (
-    TS_DATABASE,
-    TS_HOST,
-    TS_PORT,
-    TS_USERNAME,
-    TS_PASSWORD,
-    TS_DATABASE_2,
-    TS_HOST_2,
-    TS_PORT_2,
-    TS_USERNAME_2,
-    TS_PASSWORD_2,
-)
 from dataclasses import dataclass
 from datetime import datetime
+
+import pandas as pd
+from sqlalchemy import create_engine
+
+from config.default import (
+    TS_DATABASE,
+    TS_DATABASE_2,
+    TS_HOST,
+    TS_HOST_2,
+    TS_PASSWORD,
+    TS_PASSWORD_2,
+    TS_PORT,
+    TS_PORT_2,
+    TS_USERNAME,
+    TS_USERNAME_2,
+)
 
 
 @dataclass

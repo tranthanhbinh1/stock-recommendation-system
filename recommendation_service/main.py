@@ -1,9 +1,12 @@
-from .stock_recommender import StockRecommender
-from .portfolio_optimizer import PortfolioOptimizer
-from config.logging_config import setup_logging
-from typing import Literal
 import logging
+from typing import Literal
+
 import pandas as pd
+
+from config.logging_config import setup_logging
+
+from .portfolio_optimizer import PortfolioOptimizer
+from .stock_recommender import StockRecommender
 
 setup_logging()
 logging.getLogger(__name__)

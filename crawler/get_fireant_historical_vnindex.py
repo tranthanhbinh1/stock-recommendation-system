@@ -1,11 +1,13 @@
-import requests
 import logging
-from datetime import datetime, timedelta
 from dataclasses import dataclass
+from datetime import datetime, timedelta
+
+import pandas as pd
+import requests
+
 from config.default import FIREANT_HEADERS
 from config.logging_config import setup_logging
 from utils.timescale_connector import TimescaleConnector
-import pandas as pd
 
 
 @dataclass

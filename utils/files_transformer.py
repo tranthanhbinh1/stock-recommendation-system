@@ -1,4 +1,5 @@
 import os
+
 import pandas as pd
 
 
@@ -49,5 +50,5 @@ def files_concater(directory: str, prefix: str) -> pd.DataFrame:
                 print("The number of errors:", len(errors))
 
     data = data.reset_index(drop=True)
-    
+
     return data

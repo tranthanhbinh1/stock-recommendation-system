@@ -1,20 +1,24 @@
-from flask import Flask
-from flask import request, jsonify
+import base64
+import io
+import logging
+import urllib
+
+import pandas as pd
+
 # from flask_cors import CORS
 from dotenv import load_dotenv
-import logging
+from flask import Flask, jsonify, request
+
 from config.logging_config import setup_logging
-import pandas as pd
-from utils.timescale_connector import TimescaleConnector, TimescaleConnnector2
-from recommendation_service.main import main
 from recommendation_service.backtester import Backtester
-import io
-import urllib, base64
+from recommendation_service.main import main
+from utils.timescale_connector import TimescaleConnector, TimescaleConnnector2
 
 setup_logging()
 load_dotenv()
 app = Flask(__name__)
 # CORS(app)
+
 
 @app.route("/data/price", methods=["GET"])
 def get_price():
@@ -35,7 +39,6 @@ def get_price():
     return jsonify(processed_df.to_dict(orient="records"))  # Return list directly
 
 
-
 @app.route("/recommendation/customize/portfolio", methods=["GET"])
 def get_recommendation_custom_portfolio():
     sectors = request.args.get("sectors")
@@ -51,7 +54,6 @@ def get_recommendation_custom_portfolio():
     return {
         "recommended_stock": optimal_portfolio,
     }
-
 
 
 @app.route("/recommendation/customize/ranked_stocks", methods=["GET"])

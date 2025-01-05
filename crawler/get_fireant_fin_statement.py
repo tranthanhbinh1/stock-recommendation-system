@@ -1,12 +1,14 @@
-import requests
 import logging
 import time
 from dataclasses import dataclass
-from crawler.get_vn100 import get_vn100_symbols
+from typing import Literal
+
+import requests
+
 from config.default import FIREANT_HEADERS
 from config.logging_config import setup_logging
+from crawler.get_vn100 import get_vn100_symbols
 from utils.mongo_connector import MongoConnector
-from typing import Literal
 
 
 @dataclass
@@ -53,7 +55,9 @@ class FireantFinStatement:
 
         try:
             MongoConnector.insert_to_mongo(collection, _data)
-            logging.info(f"Inserted data of symbol {symbol}, type {type} to {collection}")
+            logging.info(
+                f"Inserted data of symbol {symbol}, type {type} to {collection}"
+            )
         except Exception as e:
             logging.error(repr(e))
 
