@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "backtesting>=0.3.3",
+    "dbt>=1.0.0.38.23",
     "fastapi>=0.115.6",
     "httpx>=0.28.1",
     "instructor>=1.7.2",
