@@ -5,7 +5,7 @@ from backtesting import Backtest, Strategy
 from backtesting.lib import crossover
 
 from config.logging_config import setup_logging
-from utils.timescale_connector import PostgresConnector
+from utils.postgres_connector import PostgresConnector
 
 from .technical_analysis import TechnicalAnalysis
 

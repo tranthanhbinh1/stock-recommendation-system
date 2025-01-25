@@ -4,7 +4,7 @@ import pandas as pd
 
 from config.default import industries_type
 from config.logging_config import setup_logging
-from utils.timescale_connector import PostgresConnector
+from utils.postgres_connector import PostgresConnector
 from utils.utils import filter_financial_ratio
 
 from .fundamentals_analysis import FundamentalAnalysis

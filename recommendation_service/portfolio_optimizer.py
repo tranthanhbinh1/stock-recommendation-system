@@ -7,7 +7,7 @@ import pandas as pd
 from scipy.optimize import minimize
 
 from config.logging_config import setup_logging
-from utils.timescale_connector import PostgresConnector
+from utils.postgres_connector import PostgresConnector
 
 setup_logging()
 logging.getLogger(__name__)

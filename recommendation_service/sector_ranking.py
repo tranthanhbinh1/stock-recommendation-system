@@ -4,7 +4,7 @@ from functools import lru_cache
 import pandas as pd
 
 from config.logging_config import setup_logging
-from utils.timescale_connector import PostgresConnector
+from utils.postgres_connector import PostgresConnector
 
 setup_logging()
 

@@ -8,7 +8,7 @@ import requests
 from config.default import SSI_DOWNLOAD_FIN_RATIO_URL, SSI_FIIN_HEADERS
 from config.logging_config import setup_logging
 from crawler.get_vn100 import get_vn100_symbols
-from utils.timescale_connector import PostgresConnector
+from utils.postgres_connector import PostgresConnector
 from utils.utils import convert_camel_to_snake
 
 

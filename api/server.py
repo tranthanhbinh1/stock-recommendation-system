@@ -12,7 +12,7 @@ from flask import Flask, jsonify, request
 from config.logging_config import setup_logging
 from recommendation_service.backtester import Backtester
 from recommendation_service.main import main
-from utils.timescale_connector import PostgresConnector, PostgresConnnector2
+from utils.postgres_connector import PostgresConnector, PostgresConnnector2
 
 setup_logging()
 load_dotenv()

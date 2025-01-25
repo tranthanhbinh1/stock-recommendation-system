@@ -7,7 +7,7 @@ import requests
 
 from config.default import FIREANT_HEADERS
 from config.logging_config import setup_logging
-from utils.timescale_connector import PostgresConnector
+from utils.postgres_connector import PostgresConnector
 
 
 @dataclass
