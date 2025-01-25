@@ -7,7 +7,7 @@ import pandas as pd
 from scipy.optimize import minimize
 
 from config.logging_config import setup_logging
-from utils.timescale_connector import TimescaleConnector
+from utils.timescale_connector import PostgresConnector
 
 setup_logging()
 logging.getLogger(__name__)
@@ -37,7 +37,7 @@ class PortfolioOptimizer:
 
     def query_stock_prices(self) -> None:
         for symbol in self.top_stocks:
-            df = TimescaleConnector.query_ohlcv_daily(symbol)
+            df = PostgresConnector.query_ohlcv_daily(symbol)
             df = df.close
             df.columns = [symbol]
             if symbol == self.top_stocks[0]:

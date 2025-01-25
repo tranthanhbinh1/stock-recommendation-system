@@ -7,7 +7,7 @@ import requests
 
 from config.default import FIREANT_HEADERS
 from config.logging_config import setup_logging
-from utils.timescale_connector import TimescaleConnector
+from utils.timescale_connector import PostgresConnector
 
 
 @dataclass
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     setup_logging()
     df = FireantHistoricalVnIndex.transform_data()
     logging.info(df)
-    TimescaleConnector.insert(
+    PostgresConnector.insert(
         df=df,
         table_name="historical_vnindex",
         schema="market_data",

@@ -17,16 +17,16 @@ from torchvision import datasets
 from torchvision.transforms import ToTensor
 
 from config.logging_config import setup_logging
-from utils.timescale_connector import TimescaleConnector
+from utils.timescale_connector import PostgresConnector
 
 setup_logging()
 
 
-symbol_lts = TimescaleConnector.get_symbols()
+symbol_lts = PostgresConnector.get_symbols()
 
 df_ = {}
 for symbol in symbol_lts:
-    df_[symbol] = TimescaleConnector.query_ohlcv_daily(symbol)
+    df_[symbol] = PostgresConnector.query_ohlcv_daily(symbol)
 
 
 # Prices prior to 2023 as a training set and the rest as test set

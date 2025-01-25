@@ -12,7 +12,7 @@ from flask import Flask, jsonify, request
 from config.logging_config import setup_logging
 from recommendation_service.backtester import Backtester
 from recommendation_service.main import main
-from utils.timescale_connector import TimescaleConnector, TimescaleConnnector2
+from utils.timescale_connector import PostgresConnector, PostgresConnnector2
 
 setup_logging()
 load_dotenv()
@@ -23,8 +23,8 @@ app = Flask(__name__)
 @app.route("/data/price", methods=["GET"])
 def get_price():
     symbol = request.args.get("symbol", "SSI")
-    df = TimescaleConnnector2.query_update_price(symbol=symbol)
-    change = TimescaleConnnector2.query_update_change(symbol=symbol).index
+    df = PostgresConnnector2.query_update_price(symbol=symbol)
+    change = PostgresConnnector2.query_update_change(symbol=symbol).index
     processed_df = pd.DataFrame(
         {
             "code": df["symbol"],

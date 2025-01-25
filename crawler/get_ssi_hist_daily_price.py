@@ -8,7 +8,7 @@ import requests
 from config.default import SSI_HEADERS
 from config.logging_config import setup_logging
 from crawler.get_vn100 import get_vn100_symbols
-from utils.timescale_connector import TimescaleConnector
+from utils.timescale_connector import PostgresConnector
 
 
 @dataclass
@@ -23,7 +23,7 @@ class SSIHistoricalDailyPrice:
         to_date: str = datetime.today().strftime("%Y-%m-%d"),
         URL: str = DEFAULT_URL,
     ):
-        from_date = TimescaleConnector.get_last_call_date_hist_prices(symbol)
+        from_date = PostgresConnector.get_last_call_date_hist_prices(symbol)
         from_timestamp = int(datetime.strptime(from_date, "%Y-%m-%d").timestamp())
         to_timestamp = int(datetime.strptime(to_date, "%Y-%m-%d").timestamp())
 
@@ -78,9 +78,9 @@ if __name__ == "__main__":
     # set up logging to stdout
     setup_logging()
     crawler = SSIHistoricalDailyPrice()
-    connector = TimescaleConnector()
+    connector = PostgresConnector()
     try:
-        symbol_lst = TimescaleConnector.get_symbols()
+        symbol_lst = PostgresConnector.get_symbols()
     except Exception as e:
         logging.warning(repr(e))
         symbol_lst = get_vn100_symbols()
@@ -89,7 +89,7 @@ if __name__ == "__main__":
         logging.info(f"Getting data for {symbol}")
         try:
             df_ = crawler.get_historical_daily_price(symbol=symbol)
-            TimescaleConnector.insert(
+            PostgresConnector.insert(
                 df=df_, schema="market_data", table_name="ssi_daily_ohlcv"
             )
         except Exception as e:

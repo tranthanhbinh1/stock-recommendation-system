@@ -4,7 +4,7 @@ from functools import lru_cache
 import pandas as pd
 
 from config.logging_config import setup_logging
-from utils.timescale_connector import TimescaleConnector
+from utils.timescale_connector import PostgresConnector
 
 setup_logging()
 
@@ -19,20 +19,20 @@ class SectorRanking:
     @lru_cache(maxsize=1)
     def load_data(self):
         logging.info("Loading data...")
-        self.industries = TimescaleConnector.query_by_sql(
+        self.industries = PostgresConnector.query_by_sql(
             """
             SELECT * FROM market_data.industries_sectors
             """
         )
 
-        self.prices_1y = TimescaleConnector.query_ohlcv_1y_interval()
+        self.prices_1y = PostgresConnector.query_ohlcv_1y_interval()
         self.prices_1y = self.prices_1y.merge(
             self.industries, on="symbol", how="left"
         ).astype({"close": float})
         self.prices_1y["stock_price_change"] = self.prices_1y.groupby(
             "symbol"
         ).close.pct_change()
-        self.vnindex_1y = TimescaleConnector.query_vnindex_1y_interval()
+        self.vnindex_1y = PostgresConnector.query_vnindex_1y_interval()
         self.vnindex_1y.dropna()
         self.prices_1y.dropna()
 

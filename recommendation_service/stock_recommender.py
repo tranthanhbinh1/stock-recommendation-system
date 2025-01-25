@@ -4,7 +4,7 @@ import pandas as pd
 
 from config.default import industries_type
 from config.logging_config import setup_logging
-from utils.timescale_connector import TimescaleConnector
+from utils.timescale_connector import PostgresConnector
 from utils.utils import filter_financial_ratio
 
 from .fundamentals_analysis import FundamentalAnalysis
@@ -33,9 +33,9 @@ class StockRecommender:
         self.growth_threshold_eps = growth_threshold_eps
         self.growth_threshold_revenue = growth_threshold_revenue
         self.growth_threshold_roe = growth_threshold_roe
-        self.daily_price: pd.DataFrame = TimescaleConnector.query_ohlcv_all()
+        self.daily_price: pd.DataFrame = PostgresConnector.query_ohlcv_all()
         self.financial_ratios: pd.DataFrame = filter_financial_ratio(
-            TimescaleConnector.query_financial_ratios()
+            PostgresConnector.query_financial_ratios()
         )
         self.fundamental = FundamentalAnalysis(
             df_fundamental=self.financial_ratios,
@@ -48,7 +48,7 @@ class StockRecommender:
             growth_threshold_roe=self.growth_threshold_roe,
         )
         self.technical = TechnicalAnalysis(df_technical=self.daily_price)
-        self.industries: pd.DataFrame = TimescaleConnector.query_by_sql(
+        self.industries: pd.DataFrame = PostgresConnector.query_by_sql(
             """
             SELECT * FROM market_data.industries_sectors
             """

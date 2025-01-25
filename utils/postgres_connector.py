@@ -19,7 +19,7 @@ from config.default import (
 
 
 @dataclass
-class TimescaleConnector:
+class PostgresConnector:
     conn_str = (
         f"postgresql://{TS_USERNAME}:{TS_PASSWORD}@{TS_HOST}:{TS_PORT}/{TS_DATABASE}"
     )
@@ -118,7 +118,7 @@ class TimescaleConnector:
 
 
 @dataclass
-class TimescaleConnnector2:
+class PostgresConnnector2:
     conn_str = f"postgresql://{TS_USERNAME_2}:{TS_PASSWORD_2}@{TS_HOST_2}:{TS_PORT_2}/{TS_DATABASE_2}"
     connector = create_engine(conn_str)
 

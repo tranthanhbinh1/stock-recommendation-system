@@ -5,7 +5,7 @@ from backtesting import Backtest, Strategy
 from backtesting.lib import crossover
 
 from config.logging_config import setup_logging
-from utils.timescale_connector import TimescaleConnector
+from utils.timescale_connector import PostgresConnector
 
 from .technical_analysis import TechnicalAnalysis
 
@@ -30,7 +30,7 @@ class Backtester(Backtest):
         self.symbol = symbol
         self.nav = nav
         self.technical = TechnicalAnalysis(
-            df_technical=TimescaleConnector.query_ohlcv_daily(self.symbol)
+            df_technical=PostgresConnector.query_ohlcv_daily(self.symbol)
         )
         self.data = (
             pd.DataFrame()
