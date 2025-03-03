@@ -1,6 +1,0 @@
-requests
-pandas==2.1.4
-sqlalchemy
-psycopg2-binary
-python-dotenv
-scipy==1.11.4
