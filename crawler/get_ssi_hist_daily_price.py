@@ -11,13 +11,14 @@ import pandas as pd
 
 @dataclass
 class SSIHistoricalDailyPrice:
-    DEFAULT_URL = "https://iboard.ssi.com.vn/dchart/api/history"
+    DEFAULT_URL = "https://iboard-api.ssi.com.vn/statistics/charts/history"
+    # "https://iboard-api.ssi.com.vn/statistics/charts/history?resolution=1D&symbol=ACB&from=1728086400&to=1742256000"
 
     @classmethod
     def get_historical_daily_price(
         cls,
         symbol: str,
-        # from_date: str = datetime.today().strftime("%Y-%m-%d"),
+        from_date: str = datetime.today().strftime("%Y-%m-%d"),
         to_date: str = datetime.today().strftime("%Y-%m-%d"),
         URL: str = DEFAULT_URL,
     ):
@@ -38,6 +39,7 @@ class SSIHistoricalDailyPrice:
                 params=payload,
                 headers=SSI_HEADERS,
             )
+            print(response.text)
             logging.info(response.status_code)
             data = response.json()
             df_list.append(pd.DataFrame(data))
@@ -55,6 +57,7 @@ class SSIHistoricalDailyPrice:
 
         if df_ is not None:
             df = pd.DataFrame()
+            print(df_.head().to_markdown())
             df = df.assign(
                 symbol=df_["symbol"],
                 date=pd.to_datetime(df_["t"], unit="s").dt.strftime(
@@ -81,15 +84,15 @@ if __name__ == "__main__":
         symbol_lst = TimescaleConnector.get_symbols()
     except Exception as e:
         logging.warning(repr(e))
-        symbol_lst = get_vn100_symbols()
+        symbol_lst = ['ACB']
     logging.info(symbol_lst)
     for symbol in symbol_lst:
         logging.info(f"Getting data for {symbol}")
         try:
             df_ = crawler.get_historical_daily_price(symbol=symbol)
-            TimescaleConnector.insert(
-                df=df_, schema="market_data", table_name="ssi_daily_ohlcv"
-            )
+            # TimescaleConnector.insert(
+            #     df=df_, schema="market_data", table_name="ssi_daily_ohlcv"
+            # )
         except Exception as e:
             logging.error(repr(e))
     logging.info("Done!")

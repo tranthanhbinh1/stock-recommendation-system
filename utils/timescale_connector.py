@@ -1,27 +1,27 @@
 import pandas as pd
 from sqlalchemy import create_engine
-from config.default import (
-    TS_DATABASE,
-    TS_HOST,
-    TS_PORT,
-    TS_USERNAME,
-    TS_PASSWORD,
-    TS_DATABASE_2,
-    TS_HOST_2,
-    TS_PORT_2,
-    TS_USERNAME_2,
-    TS_PASSWORD_2,
-)
+# from config.default import (
+#     TS_DATABASE,
+#     TS_HOST,
+#     TS_PORT,
+#     TS_USERNAME,
+#     TS_PASSWORD,
+#     TS_DATABASE_2,
+#     TS_HOST_2,
+#     TS_PORT_2,
+#     TS_USERNAME_2,
+#     TS_PASSWORD_2,
+# )
 from dataclasses import dataclass
 from datetime import datetime
 
 
 @dataclass
 class TimescaleConnector:
-    conn_str = (
-        f"postgresql://{TS_USERNAME}:{TS_PASSWORD}@{TS_HOST}:{TS_PORT}/{TS_DATABASE}"
-    )
-    connector = create_engine(conn_str)
+    # conn_str = (
+    #     f"postgresql://{TS_USERNAME}:{TS_PASSWORD}@{TS_HOST}:{TS_PORT}/{TS_DATABASE}"
+    # )
+    # connector = create_engine(conn_str)
 
     @classmethod
     def insert(
@@ -117,8 +117,8 @@ class TimescaleConnector:
 
 @dataclass
 class TimescaleConnnector2:
-    conn_str = f"postgresql://{TS_USERNAME_2}:{TS_PASSWORD_2}@{TS_HOST_2}:{TS_PORT_2}/{TS_DATABASE_2}"
-    connector = create_engine(conn_str)
+    # conn_str = f"postgresql://{TS_USERNAME_2}:{TS_PASSWORD_2}@{TS_HOST_2}:{TS_PORT_2}/{TS_DATABASE_2}"
+    # connector = create_engine(conn_str)
 
     @classmethod
     def query_update_price(cls, symbol) -> pd.DataFrame:

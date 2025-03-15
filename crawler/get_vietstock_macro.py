@@ -35,6 +35,7 @@ class VietstockCrawler:
             data=payload,
             headers=headers,
         )
+        print(response.text)
         data = response.json()["data"]
         if data is None:
             return None
@@ -137,3 +138,9 @@ class VietstockCrawler:
         df["TernDay"] = df["TernDay"].apply(convert_timestamp)
         df.drop(columns=["CssStyle", "GroupName"], inplace=True)
         return df
+
+
+if __name__ == "__main__":
+    df= VietstockCrawler.vietstock_get_gdp(
+        from_year='2022', to_year='2022', from_quarter='1', to_quarter='3'
+    )

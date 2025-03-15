@@ -6,13 +6,25 @@ load_dotenv()
 
 VIET_STOCK_HEADERS = {
     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-    "Cookie": "ASP.NET_SessionId=4asce003hqjtvz04znp35z3d; __RequestVerificationToken=vZDaJa5OJFBPweE7FImnak_oVGBkN1hAYKhoziURMBmXHq9qWeEI-k4pmgV1MvHxvuPLGlJV6Puin5CnVq01N8uJM2TOweVXfZtB3xJNxvk1; Theme=Light; _ga=GA1.1.1833990620.1696654322; language=en-US; AnonymousNotification=; vts_usr_lg=21AEC8FA62123721AC65A2E47817E2DE669DB1D9ED464B7B851DBAD0180B9FD3A3365989A7C498EE5BC99C1D08AB991FAF1032CD1E492DC1738F52E87B31E0979E288D25560901BA92693BB0C0AC34DA31C5CF8E9B193BAF16E75801817B755D0A11E3246D6CC4C9EE2F42BEFD4092797AFAF1DB2D3928913737AF883DC1529F86363787C577896E44FEBBD4EAEC19B9; _pbjs_userid_consent_data=3524755945110770; dable_uid=undefined; _ga_EXMM0DKVEX=GS1.1.1697155153.17.1.1697155289.59.0.0; language=vi-VN",
+    "Cookie": "ASP.NET_SessionId=hhqxe2uikmsba1a2nkx43zcg; __RequestVerificationToken=e9T6xAGiBU0Oef2nIeDhxMizCiPUSVSTsp0zBgMJjRgygs4zDISTsImYQ-_CYaDrHR25ygn80nJA9btHYnxfEchCinaqc23_EIFm3P7et401; CookieNewsFirt=0; _ga=GA1.1.1089638179.1742021198; isShowLogin=true; _ga_EXMM0DKVEX=GS1.1.1742021197.1.1.1742021215.42.0.0",
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36 Edg/117.0.2045.55",
 }
 
 SSI_HEADERS = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/117.0.0.0 Safari/537.36"
-}
+    'accept': 'application/json, text/plain, */*',
+    'accept-language': 'en,vi;q=0.9,en-US;q=0.8,zh-CN;q=0.7,zh;q=0.6',
+    'origin': 'https://iboard.ssi.com.vn',
+    'priority': 'u=1, i',
+    'referer': 'https://iboard.ssi.com.vn/',
+    'sec-ch-ua': '"Not(A:Brand";v="99", "Google Chrome";v="133", "Chromium";v="133"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-site',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36',
+    'Cookie': '__cf_bm=t7wQxTbdZu20dl0uHEfFD5WBlTkQnABCKiLP0uBChKc-1742022870-1.0.1.1-wI6fgwQfplnOixdk5Se36j75eF7AjhS_HcKx7oVKtZcEXpWm15Ce4I4HzvGFxdBsOVXO7FwVekEroqF4WWlVh8D9jUauRiLn.RoQtc1Fo2g; _cfuvid=r_hIh334vWqtOTV7A3cOZf01jAlpXz_sw2T7kUgDXAw-1742022870944-0.0.1.1-604800000'
+  }
 
 SSI_FIIN_HEADERS = {
     "authority": "fiin-fundamental.ssi.com.vn",
@@ -46,17 +58,17 @@ SSI_OHLCV_HISTORY = "https://iboard.ssi.com.vn/dchart/api/history"
 SSI_DOWNLOAD_FIN_RATIO_URL = "https://fiin-fundamental.ssi.com.vn/FinancialAnalysis/DownloadFinancialRatio2?language=en&OrganCode={symbol}&CompareToIndustry=false&Frequency=Quarterly&Ratios=ryd21&Ratios=ryd25&Ratios=ryd26&Ratios=ryd28&Ratios=ryd14&Ratios=ryd7&Ratios=ryd30&Ratios=rev&Ratios=isa22&Ratios=ryq27&Ratios=ryq29&Ratios=ryq25&Ratios=ryq12&Ratios=ryq14&Ratios=ryq76&Ratios=ryq3&Ratios=ryq1&Ratios=ryq2&Ratios=ryq77&Ratios=ryq31&Ratios=ryq91&Ratios=ryq16&Ratios=ryq18&Ratios=ryq20&Ratios=cashCycle&Ratios=ryq10&Ratios=ryq6&Ratios=ryq71&Ratios=ryd11&Ratios=ryd3&TimeLineFrom={timeline_from}"
 
 # DATABASE CONNECTIONS
-TS_HOST = os.environ["TS_HOST"]
-TS_PORT = os.environ["TS_PORT"]
-TS_USERNAME = os.environ["TS_USERNAME"]
-TS_PASSWORD = os.environ["TS_PASSWORD"]
-TS_DATABASE = os.environ["TS_DATABASE"]
+# TS_HOST = os.environ["TS_HOST"]
+# TS_PORT = os.environ["TS_PORT"]
+# TS_USERNAME = os.environ["TS_USERNAME"]
+# TS_PASSWORD = os.environ["TS_PASSWORD"]
+# TS_DATABASE = os.environ["TS_DATABASE"]
 
-TS_HOST_2 = os.environ["TS_HOST_2"]
-TS_PORT_2 = os.environ["TS_PORT_2"]
-TS_USERNAME_2 = os.environ["TS_USERNAME_2"]
-TS_PASSWORD_2 = os.environ["TS_PASSWORD_2"]
-TS_DATABASE_2 = os.environ["TS_DATABASE_2"]
+# TS_HOST_2 = os.environ["TS_HOST_2"]
+# TS_PORT_2 = os.environ["TS_PORT_2"]
+# TS_USERNAME_2 = os.environ["TS_USERNAME_2"]
+# TS_PASSWORD_2 = os.environ["TS_PASSWORD_2"]
+# TS_DATABASE_2 = os.environ["TS_DATABASE_2"]
 
 # MONGO_HOST = os.environ["MONGO_HOST"]
 # MONGO_PORT = os.environ["MONGO_PORT"]
