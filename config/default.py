@@ -45,18 +45,18 @@ IN_PAYLOAD = "type=1&fromYear={from_year}&toYear={to_year}&from={from_date}&to={
 SSI_OHLCV_HISTORY = "https://iboard.ssi.com.vn/dchart/api/history"
 SSI_DOWNLOAD_FIN_RATIO_URL = "https://fiin-fundamental.ssi.com.vn/FinancialAnalysis/DownloadFinancialRatio2?language=en&OrganCode={symbol}&CompareToIndustry=false&Frequency=Quarterly&Ratios=ryd21&Ratios=ryd25&Ratios=ryd26&Ratios=ryd28&Ratios=ryd14&Ratios=ryd7&Ratios=ryd30&Ratios=rev&Ratios=isa22&Ratios=ryq27&Ratios=ryq29&Ratios=ryq25&Ratios=ryq12&Ratios=ryq14&Ratios=ryq76&Ratios=ryq3&Ratios=ryq1&Ratios=ryq2&Ratios=ryq77&Ratios=ryq31&Ratios=ryq91&Ratios=ryq16&Ratios=ryq18&Ratios=ryq20&Ratios=cashCycle&Ratios=ryq10&Ratios=ryq6&Ratios=ryq71&Ratios=ryd11&Ratios=ryd3&TimeLineFrom={timeline_from}"
 
-# DATABASE CONNECTIONS
-TS_HOST = os.environ["TS_HOST"]
-TS_PORT = os.environ["TS_PORT"]
-TS_USERNAME = os.environ["TS_USERNAME"]
-TS_PASSWORD = os.environ["TS_PASSWORD"]
-TS_DATABASE = os.environ["TS_DATABASE"]
+# # DATABASE CONNECTIONS
+# TS_HOST = os.environ["TS_HOST"]
+# TS_PORT = os.environ["TS_PORT"]
+# TS_USERNAME = os.environ["TS_USERNAME"]
+# TS_PASSWORD = os.environ["TS_PASSWORD"]
+# TS_DATABASE = os.environ["TS_DATABASE"]
 
-TS_HOST_2 = os.environ["TS_HOST_2"]
-TS_PORT_2 = os.environ["TS_PORT_2"]
-TS_USERNAME_2 = os.environ["TS_USERNAME_2"]
-TS_PASSWORD_2 = os.environ["TS_PASSWORD_2"]
-TS_DATABASE_2 = os.environ["TS_DATABASE_2"]
+# TS_HOST_2 = os.environ["TS_HOST_2"]
+# TS_PORT_2 = os.environ["TS_PORT_2"]
+# TS_USERNAME_2 = os.environ["TS_USERNAME_2"]
+# TS_PASSWORD_2 = os.environ["TS_PASSWORD_2"]
+# TS_DATABASE_2 = os.environ["TS_DATABASE_2"]
 
 # MONGO_HOST = os.environ["MONGO_HOST"]
 # MONGO_PORT = os.environ["MONGO_PORT"]
