@@ -39,10 +39,10 @@ class SSIHistoricalDailyPrice:
                 params=payload,
                 headers=SSI_HEADERS,
             )
-            print(response.text)
-            logging.info(response.status_code)
-            data = response.json()
-            df_list.append(pd.DataFrame(data))
+            data = response.json()["data"]
+            temp_df = pd.DataFrame(data)
+            temp_df["symbol"] = symbol
+            df_list.append(temp_df)
         except Exception as e:
             logging.error(repr(e))
         if not data:
@@ -84,7 +84,7 @@ if __name__ == "__main__":
         symbol_lst = TimescaleConnector.get_symbols()
     except Exception as e:
         logging.warning(repr(e))
-        symbol_lst = ['ACB']
+        symbol_lst = ["ACB"]
     logging.info(symbol_lst)
     for symbol in symbol_lst:
         logging.info(f"Getting data for {symbol}")
